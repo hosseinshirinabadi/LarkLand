@@ -3,27 +3,31 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5826D1034F883A78C942666D /* Pods_LarkLand.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA03A503CAEFC070D08F4A4 /* Pods_LarkLand.framework */; };
 		949A2481258AB80A00C48AD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949A2480258AB80A00C48AD4 /* AppDelegate.swift */; };
 		949A2483258AB80A00C48AD4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949A2482258AB80A00C48AD4 /* SceneDelegate.swift */; };
-		949A2485258AB80A00C48AD4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949A2484258AB80A00C48AD4 /* ViewController.swift */; };
-		949A2488258AB80A00C48AD4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 949A2486258AB80A00C48AD4 /* Main.storyboard */; };
 		949A248A258AB80B00C48AD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 949A2489258AB80B00C48AD4 /* Assets.xcassets */; };
 		949A248D258AB80B00C48AD4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 949A248B258AB80B00C48AD4 /* LaunchScreen.storyboard */; };
+		949A2496258ABB4900C48AD4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 949A2495258ABB4900C48AD4 /* GoogleService-Info.plist */; };
+		949A24E1258ABFF100C48AD4 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949A24E0258ABFF000C48AD4 /* LandingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0198BF56985CE3E9E21E0BAD /* Pods-LarkLand.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LarkLand.debug.xcconfig"; path = "Target Support Files/Pods-LarkLand/Pods-LarkLand.debug.xcconfig"; sourceTree = "<group>"; };
+		83297D2F40E22C94F1EBF59D /* Pods-LarkLand.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LarkLand.release.xcconfig"; path = "Target Support Files/Pods-LarkLand/Pods-LarkLand.release.xcconfig"; sourceTree = "<group>"; };
 		949A247D258AB80A00C48AD4 /* LarkLand.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LarkLand.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		949A2480258AB80A00C48AD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		949A2482258AB80A00C48AD4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		949A2484258AB80A00C48AD4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		949A2487258AB80A00C48AD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		949A2489258AB80B00C48AD4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		949A248C258AB80B00C48AD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		949A248E258AB80B00C48AD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		949A2495258ABB4900C48AD4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		949A24E0258ABFF000C48AD4 /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
+		CEA03A503CAEFC070D08F4A4 /* Pods_LarkLand.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LarkLand.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +35,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5826D1034F883A78C942666D /* Pods_LarkLand.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8ADFF8D4ACD1AA9F945C209C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CEA03A503CAEFC070D08F4A4 /* Pods_LarkLand.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		949A2474258AB80A00C48AD4 = {
 			isa = PBXGroup;
 			children = (
 				949A247F258AB80A00C48AD4 /* LarkLand */,
 				949A247E258AB80A00C48AD4 /* Products */,
+				E56EF9FDB27B180E317FCF95 /* Pods */,
+				8ADFF8D4ACD1AA9F945C209C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,15 +71,32 @@
 		949A247F258AB80A00C48AD4 /* LarkLand */ = {
 			isa = PBXGroup;
 			children = (
-				949A2480258AB80A00C48AD4 /* AppDelegate.swift */,
-				949A2482258AB80A00C48AD4 /* SceneDelegate.swift */,
-				949A2484258AB80A00C48AD4 /* ViewController.swift */,
-				949A2486258AB80A00C48AD4 /* Main.storyboard */,
+				949A24DF258ABFC500C48AD4 /* Controllers */,
 				949A2489258AB80B00C48AD4 /* Assets.xcassets */,
 				949A248B258AB80B00C48AD4 /* LaunchScreen.storyboard */,
+				949A2495258ABB4900C48AD4 /* GoogleService-Info.plist */,
 				949A248E258AB80B00C48AD4 /* Info.plist */,
 			);
 			path = LarkLand;
+			sourceTree = "<group>";
+		};
+		949A24DF258ABFC500C48AD4 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				949A24E0258ABFF000C48AD4 /* LandingViewController.swift */,
+				949A2480258AB80A00C48AD4 /* AppDelegate.swift */,
+				949A2482258AB80A00C48AD4 /* SceneDelegate.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		E56EF9FDB27B180E317FCF95 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0198BF56985CE3E9E21E0BAD /* Pods-LarkLand.debug.xcconfig */,
+				83297D2F40E22C94F1EBF59D /* Pods-LarkLand.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +106,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 949A2491258AB80B00C48AD4 /* Build configuration list for PBXNativeTarget "LarkLand" */;
 			buildPhases = (
+				D630C215D929EF94221ACE5E /* [CP] Check Pods Manifest.lock */,
 				949A2479258AB80A00C48AD4 /* Sources */,
 				949A247A258AB80A00C48AD4 /* Frameworks */,
 				949A247B258AB80A00C48AD4 /* Resources */,
+				69173EA645415C135F9BE3F6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -125,20 +159,62 @@
 			buildActionMask = 2147483647;
 			files = (
 				949A248D258AB80B00C48AD4 /* LaunchScreen.storyboard in Resources */,
+				949A2496258ABB4900C48AD4 /* GoogleService-Info.plist in Resources */,
 				949A248A258AB80B00C48AD4 /* Assets.xcassets in Resources */,
-				949A2488258AB80A00C48AD4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		69173EA645415C135F9BE3F6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LarkLand/Pods-LarkLand-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LarkLand/Pods-LarkLand-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LarkLand/Pods-LarkLand-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D630C215D929EF94221ACE5E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LarkLand-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		949A2479258AB80A00C48AD4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				949A2485258AB80A00C48AD4 /* ViewController.swift in Sources */,
 				949A2481258AB80A00C48AD4 /* AppDelegate.swift in Sources */,
+				949A24E1258ABFF100C48AD4 /* LandingViewController.swift in Sources */,
 				949A2483258AB80A00C48AD4 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -146,14 +222,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		949A2486258AB80A00C48AD4 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				949A2487258AB80A00C48AD4 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		949A248B258AB80B00C48AD4 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -283,6 +351,7 @@
 		};
 		949A2492258AB80B00C48AD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0198BF56985CE3E9E21E0BAD /* Pods-LarkLand.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -292,7 +361,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.shirinabadi.LarkLand.LarkLand;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shirinabadi.LarkLand;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -301,6 +370,7 @@
 		};
 		949A2493258AB80B00C48AD4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 83297D2F40E22C94F1EBF59D /* Pods-LarkLand.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -310,7 +380,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.shirinabadi.LarkLand.LarkLand;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shirinabadi.LarkLand;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
