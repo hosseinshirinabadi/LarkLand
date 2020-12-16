@@ -6,12 +6,20 @@
 //
 
 import UIKit
+import SpriteKit
+
 
 class LandingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .red
+        let scene = GameScene(size: view.bounds.size)
+        let skView = view as! SKView
+        skView.showsFPS = true
+        skView.showsNodeCount = true
+        skView.ignoresSiblingOrder = true
+        scene.scaleMode = .resizeFill
+        skView.presentScene(scene)
 
         // Do any additional setup after loading the view.
     }
