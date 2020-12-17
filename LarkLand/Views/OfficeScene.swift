@@ -133,10 +133,9 @@ class OfficeScene: SKScene {
         
         player.position = CGPoint(x: size.width * CGFloat(positionX), y: size.height * CGFloat(positionY))
         player.size = CGSize(width: player.size.width * CGFloat(1.5), height: player.size.height * CGFloat(1.5))
-        
         playerLabel.text = currUser.userID
         playerLabel.fontSize = 15
-        playerLabel.position = CGPoint(x: size.width * CGFloat(positionX), y: size.height * CGFloat(positionY) + 10)
+        playerLabel.position = CGPoint(x: size.width * CGFloat(positionX), y: size.height * CGFloat(positionY) + player.size.height)
         
         addChild(player)
         addChild(playerLabel)
@@ -153,11 +152,11 @@ class OfficeScene: SKScene {
     
     func detectProximity() {
         for (name, sprite) in friendNodeDict {
-            if (player.position - sprite.position).length() < 50 && !isClose {
+            if (player.position - sprite.position).length() < CGFloat(Constants.proximityRadius) && !isClose {
                 print(name + " is close to you")
                 isClose = true
                 videoDelegate?.enableCall(participant: name)
-            } else if (isClose && (player.position - sprite.position).length() < 50) {
+            } else if (isClose && (player.position - sprite.position).length() < CGFloat(Constants.proximityRadius)) {
 //                print("in call")
             } else {
                 isClose = false
@@ -215,13 +214,17 @@ class OfficeScene: SKScene {
     let touchLocation = touch.location(in: self)
     
     let offset = touchLocation - player.position
+    let labelOffset = CGPoint(x: touchLocation.x, y: touchLocation.y + player.size.height) - CGPoint(x: size.width * CGFloat(player.position.x), y: size.height * CGFloat(player.position.y) + player.size.height)
     let shootAmount = offset
     let realDest = shootAmount + player.position
+    let labelDest = labelOffset + CGPoint(x: size.width * CGFloat(player.position.x), y: size.height * CGFloat(player.position.y) + player.size.height)
     let movementTime = Float(realDest.length()) / Constants.speed
+    
     let actionMove = SKAction.move(to: realDest, duration: TimeInterval(movementTime))
+    let labelActionMove = SKAction.move(to: labelDest, duration: TimeInterval(movementTime))
     var dbCount = 0
     player.run(actionMove)
-    playerLabel.run(actionMove)
+    playerLabel.run(labelActionMove)
     Timer.scheduledTimer(withTimeInterval: TimeInterval(movementTime / Float(Constants.numSteps)), repeats: true) { timer in
         dbCount += 1
         currUser.setPosition(positionX: Float(self.player.position.x / screenWidth), positionY: Float(self.player.position.y / screenHeight))

@@ -71,6 +71,7 @@ class OfficeViewController: UIViewController, VideoCallDelegate {
     }
     
     func enableCall(participant:String) {
+        setupVideoView()
         myView.isHidden = false
         friendView.isHidden = false
         roomName = Constants.officeName
@@ -94,7 +95,7 @@ class OfficeViewController: UIViewController, VideoCallDelegate {
         }
         
         myView.isHidden = true
-        friendView.isHidden = true
+//        friendView.isHidden = true
     }
     
     
@@ -164,7 +165,7 @@ extension OfficeViewController {
         self.prepareLocalMedia()
 
         // Preparing the connect options with the access token that we fetched (or hardcoded).
-        let connectOptions = ConnectOptions(token: accessToken!) { (builder) in
+        let connectOptions = ConnectOptions(token: self.accessToken!) { (builder) in
 
             // Use the local media that we prepared earlier.
             builder.audioTracks = self.localAudioTrack != nil ? [self.localAudioTrack!] : [LocalAudioTrack]()
@@ -284,11 +285,10 @@ extension OfficeViewController : RoomDelegate {
     func roomDidConnect(room: Room) {
         // At the moment, this example only supports rendering one Participant at a time.
 
-
+        logMessage(messageText: "connected to room \(room.name)")
         if (room.remoteParticipants.count > 0) {
             self.remoteParticipant = room.remoteParticipants[0]
             self.remoteParticipant?.delegate = self
-            
         }
     }
 
