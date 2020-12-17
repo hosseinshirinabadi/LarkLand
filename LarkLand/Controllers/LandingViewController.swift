@@ -12,7 +12,7 @@ import SpriteKit
 class LandingViewController: UIViewController {
     
     override func loadView() {
-        self.view = SKView()
+        self.view = SKView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
     }
     
     override func viewDidLoad() {
