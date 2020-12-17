@@ -15,6 +15,7 @@
 		949A2496258ABB4900C48AD4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 949A2495258ABB4900C48AD4 /* GoogleService-Info.plist */; };
 		949A24E1258ABFF100C48AD4 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949A24E0258ABFF000C48AD4 /* LandingViewController.swift */; };
 		949A24E8258AD21600C48AD4 /* LandingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949A24E7258AD21600C48AD4 /* LandingView.swift */; };
+		949A24EF258AEC0C00C48AD4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949A24EE258AEC0C00C48AD4 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		949A2495258ABB4900C48AD4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		949A24E0258ABFF000C48AD4 /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
 		949A24E7258AD21600C48AD4 /* LandingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingView.swift; sourceTree = "<group>"; };
+		949A24EE258AEC0C00C48AD4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		CEA03A503CAEFC070D08F4A4 /* Pods_LarkLand.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LarkLand.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -73,6 +75,7 @@
 		949A247F258AB80A00C48AD4 /* LarkLand */ = {
 			isa = PBXGroup;
 			children = (
+				949A24ED258AEBF300C48AD4 /* Models */,
 				949A24E6258AD1F700C48AD4 /* Views */,
 				949A24DF258ABFC500C48AD4 /* Controllers */,
 				949A2489258AB80B00C48AD4 /* Assets.xcassets */,
@@ -101,6 +104,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		949A24ED258AEBF300C48AD4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				949A24EE258AEC0C00C48AD4 /* User.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		E56EF9FDB27B180E317FCF95 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -122,6 +133,7 @@
 				949A247A258AB80A00C48AD4 /* Frameworks */,
 				949A247B258AB80A00C48AD4 /* Resources */,
 				69173EA645415C135F9BE3F6 /* [CP] Embed Pods Frameworks */,
+				78CDD4C9554352C59E221615 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -195,6 +207,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LarkLand/Pods-LarkLand-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		78CDD4C9554352C59E221615 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LarkLand/Pods-LarkLand-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LarkLand/Pods-LarkLand-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LarkLand/Pods-LarkLand-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		D630C215D929EF94221ACE5E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -227,6 +256,7 @@
 				949A24E8258AD21600C48AD4 /* LandingView.swift in Sources */,
 				949A2481258AB80A00C48AD4 /* AppDelegate.swift in Sources */,
 				949A24E1258ABFF100C48AD4 /* LandingViewController.swift in Sources */,
+				949A24EF258AEC0C00C48AD4 /* User.swift in Sources */,
 				949A2483258AB80A00C48AD4 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
