@@ -7,6 +7,7 @@
 
 import Foundation
 import SpriteKit
+import TwilioVideo
 
 var userDict = [String:User]()
 var friendNodeDict = [String:SKSpriteNode]()
@@ -46,6 +47,11 @@ let screenWidth = UIScreen.main.bounds.width
 let screenHeight = UIScreen.main.bounds.height
 
 
+protocol VideoCallDelegate: class {
+    func enableCall(participant:String)
+    func disableCall(participant:String)
+}
+
 
 class OfficeScene: SKScene {
   
@@ -56,9 +62,11 @@ class OfficeScene: SKScene {
         static let projectile: UInt32 = 0b10      // 2
     }
     
+    weak var videoDelegate: VideoCallDelegate?
+
     let player = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: currUser.userData.spriteCol!, row: currUser.userData.spriteRow!))
+//    let playerLabel = SKLabelNode(fontNamed: "AmericanTypewriter-Bold")
     var isClose = false
-   
     
     func setUpListener() {
         db.collection("users").addSnapshotListener { querySnapshot, error in
@@ -78,7 +86,6 @@ class OfficeScene: SKScene {
                 }
             }
         }
-        
     }
     
     
@@ -88,6 +95,7 @@ class OfficeScene: SKScene {
         }
     }
     
+
     @objc func areTheyCloseFunction() {
         var closePeople: [SKSpriteNode] = []
         for (name, sprite) in friendNodeDict {
@@ -95,13 +103,11 @@ class OfficeScene: SKScene {
         }
     }
     
-    
-    
-    
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.white
         var backgroundImage = SKSpriteNode(imageNamed: "larkland")
         backgroundImage.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
+        backgroundImage.zPosition = -1
         addChild(backgroundImage)
         let positionX: Float!
         let positionY: Float!
@@ -123,8 +129,15 @@ class OfficeScene: SKScene {
             currUser.setSprite(spriteRow: currUser.userData.spriteRow!, spriteCol: currUser.userData.spriteCol!)
         }
         
+        
+        
         player.position = CGPoint(x: size.width * CGFloat(positionX), y: size.height * CGFloat(positionY))
         player.size = CGSize(width: player.size.width * CGFloat(1.5), height: player.size.height * CGFloat(1.5))
+        
+//        playerLabel.text = currUser.userID
+//        playerLabel.fontSize = 15
+//        playerLabel.position = CGPoint(x: size.width * CGFloat(positionX), y: size.height * CGFloat(positionY))
+        
         addChild(player)
         physicsWorld.gravity = .zero
         physicsWorld.contactDelegate = self
@@ -142,11 +155,12 @@ class OfficeScene: SKScene {
             if (player.position - sprite.position).length() < 50 && !isClose {
                 print(name + " is close to you")
                 isClose = true
-                startVideo()
+                videoDelegate?.enableCall(participant: name)
             } else if (isClose && (player.position - sprite.position).length() < 50) {
                 print("in call")
             } else {
                 isClose = false
+                videoDelegate?.disableCall(participant: name)
             }
         }
     }
@@ -156,6 +170,7 @@ class OfficeScene: SKScene {
     }
     
     func addFriend(name: String) {
+    // Create sprite
         let user = userDict[name]
         let friend = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: user!.userData.spriteCol!, row: user!.userData.spriteRow!))
         
@@ -169,6 +184,7 @@ class OfficeScene: SKScene {
         friend.size = CGSize(width: friend.size.width * CGFloat(1.5), height: friend.size.height * CGFloat(1.5))
         addChild(friend)
         friendNodeDict[name] = friend
+
   }
   
     
@@ -182,6 +198,10 @@ class OfficeScene: SKScene {
         let actionMove = SKAction.move(to: realDest, duration: TimeInterval(movementTime))
         let friend = friendNodeDict[user.userData.name!]
         friend!.run(actionMove)
+    }
+    
+    func setUpVideoCall () {
+        
     }
     
     
