@@ -65,7 +65,7 @@ class OfficeScene: SKScene {
     weak var videoDelegate: VideoCallDelegate?
 
     let player = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: currUser.userData.spriteCol!, row: currUser.userData.spriteRow!))
-//    let playerLabel = SKLabelNode(fontNamed: "AmericanTypewriter-Bold")
+    let playerLabel = SKLabelNode(fontNamed: "AmericanTypewriter-Bold")
     var isClose = false
     
     func setUpListener() {
@@ -107,8 +107,8 @@ class OfficeScene: SKScene {
         backgroundColor = SKColor.white
         var backgroundImage = SKSpriteNode(imageNamed: "larkland")
         backgroundImage.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
-//        backgroundImage.zPosition = -1
-//        addChild(backgroundImage)
+        backgroundImage.zPosition = -1
+        addChild(backgroundImage)
         let positionX: Float!
         let positionY: Float!
         addUsers()
@@ -134,11 +134,12 @@ class OfficeScene: SKScene {
         player.position = CGPoint(x: size.width * CGFloat(positionX), y: size.height * CGFloat(positionY))
         player.size = CGSize(width: player.size.width * CGFloat(1.5), height: player.size.height * CGFloat(1.5))
         
-//        playerLabel.text = currUser.userID
-//        playerLabel.fontSize = 15
-//        playerLabel.position = CGPoint(x: size.width * CGFloat(positionX), y: size.height * CGFloat(positionY))
+        playerLabel.text = currUser.userID
+        playerLabel.fontSize = 15
+        playerLabel.position = CGPoint(x: size.width * CGFloat(positionX), y: size.height * CGFloat(positionY) + 10)
         
         addChild(player)
+        addChild(playerLabel)
         physicsWorld.gravity = .zero
         physicsWorld.contactDelegate = self
         run(SKAction.repeatForever(
@@ -220,6 +221,7 @@ class OfficeScene: SKScene {
     let actionMove = SKAction.move(to: realDest, duration: TimeInterval(movementTime))
     var dbCount = 0
     player.run(actionMove)
+    playerLabel.run(actionMove)
     Timer.scheduledTimer(withTimeInterval: TimeInterval(movementTime / Float(Constants.numSteps)), repeats: true) { timer in
         dbCount += 1
         currUser.setPosition(positionX: Float(self.player.position.x / screenWidth), positionY: Float(self.player.position.y / screenHeight))
