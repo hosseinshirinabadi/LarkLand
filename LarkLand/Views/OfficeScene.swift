@@ -56,7 +56,7 @@ class OfficeScene: SKScene {
         static let projectile: UInt32 = 0b10      // 2
     }
     
-    let player = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: Constants.spriteColHossein, row: Constants.spriteRowHossein))
+    let player = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: currUser.userData.spriteCol!, row: currUser.userData.spriteRow!))
     
     var monstersDestroyed = 0
     
@@ -183,7 +183,8 @@ class OfficeScene: SKScene {
         let realDest = shootAmount + previousPoint
         let movementTime = Float(realDest.length()) / Constants.speed
         let actionMove = SKAction.move(to: realDest, duration: TimeInterval(movementTime))
-        player.run(actionMove)
+        let friend = friendNodeDict[user.userData.name!]
+        friend!.run(actionMove)
     }
     
     
