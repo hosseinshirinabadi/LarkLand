@@ -137,7 +137,7 @@ class OfficeScene: SKScene {
         playerLabel.text = currUser.userID
         playerLabel.fontSize = 15
         playerLabel.position = CGPoint(x: size.width * CGFloat(positionX), y: size.height * CGFloat(positionY) + player.size.height / 2)
-        playerLabel.color = .black
+        playerLabel.fontColor = .black
         addChild(player)
         addChild(playerLabel)
         physicsWorld.gravity = .zero
@@ -178,7 +178,7 @@ class OfficeScene: SKScene {
         friendLabel.text = user?.userID
         friendLabel.fontSize = 15
         friendLabel.position = CGPoint(x: size.width * CGFloat((user?.userData.positionX)!), y: size.height * CGFloat((user?.userData.positionY)!) + friend.size.height / 2)
-        friendLabel.color = .black
+        friendLabel.fontColor = .black
         
         friend.physicsBody = SKPhysicsBody(rectangleOf: friend.size) // 1
         friend.physicsBody?.isDynamic = true // 2
