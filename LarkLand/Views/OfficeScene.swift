@@ -57,7 +57,6 @@ class OfficeScene: SKScene {
     }
     
     let player = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: currUser.userData.spriteCol!, row: currUser.userData.spriteRow!))
-//    var timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(detectProximity), userInfo: nil, repeats: true)
     var isClose = false
     
     func setUpListener() {
@@ -127,13 +126,11 @@ class OfficeScene: SKScene {
     }
     
     func detectProximity() {
-//        var closePeople: [SKSpriteNode] = []
         for (name, sprite) in friendNodeDict {
             if (player.position - sprite.position).length() < 50 && !isClose {
                 print(name + " is close to you")
                 isClose = true
                 startVideo()
-//                timer.invalidate()
             } else if (isClose && (player.position - sprite.position).length() < 50) {
                 print("in call")
             } else {
