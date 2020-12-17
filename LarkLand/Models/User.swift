@@ -27,6 +27,11 @@ class User {
         self.userData = UserData(name: name)
     }
     
+    init(userID: String? = nil, name: String, positionX: Float, positionY: Float, spriteRow: Int, spriteCol: Int) {
+        self.userID = userID!
+        self.userData = UserData(name: name, positionX: positionX, positionY: positionY, spriteRow: spriteRow, spriteCol: spriteCol)
+    }
+    
     func addToDB(completion: @escaping () -> Void) {
         let userdata = [
             "name": userData.name,
