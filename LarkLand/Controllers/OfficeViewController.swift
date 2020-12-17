@@ -56,8 +56,6 @@ class OfficeViewController: UIViewController, VideoCallDelegate {
     
     func setupVideoView() {
         myView = VideoView(frame: CGRect.zero, delegate: self)
-        myView?.layer.borderWidth = 3
-        myView?.layer.borderColor = UIColor.gray.cgColor
         self.view.addSubview(myView)
         myView.translatesAutoresizingMaskIntoConstraints = false
         myView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: -10-videoCallSize/2).isActive = true
@@ -91,7 +89,6 @@ class OfficeViewController: UIViewController, VideoCallDelegate {
     func disableCall(participant:String) {
         
         myView.isHidden = true
-        friendView?.isHidden = true
         if let room = self.room {
             room.disconnect()
         }
@@ -208,8 +205,6 @@ extension OfficeViewController {
         self.friendView = VideoView(frame: CGRect.zero, delegate: self)
 
         self.view.insertSubview(self.friendView!, at: 0)
-        friendView?.layer.borderWidth = 3
-        friendView?.layer.borderColor = UIColor.gray.cgColor
         self.friendView!.contentMode = .scaleAspectFill;
         
         friendView.translatesAutoresizingMaskIntoConstraints = false
@@ -266,6 +261,7 @@ extension OfficeViewController {
             if ((self.remoteParticipant?.videoTracks.count)! > 0) {
                 let remoteVideoTrack = self.remoteParticipant?.remoteVideoTracks[0].remoteTrack
                 remoteVideoTrack?.removeRenderer(self.friendView!)
+                self.friendView?.isHidden = true
                 self.friendView?.removeFromSuperview()
                 self.friendView = nil
             }
