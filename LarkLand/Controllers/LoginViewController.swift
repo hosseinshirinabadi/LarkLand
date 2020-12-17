@@ -39,6 +39,8 @@ class LogInViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        
 
     }
     
@@ -66,16 +68,38 @@ class LogInViewController: UIViewController {
         }
     }
     
+    func loadUserDict(completion: @escaping () -> Void) {
+        let userRef = db.collection.getDocuments() { (snap, error) in
+            if let err = err {
+                    print("Error getting documents: \(err)")
+            } else {
+                for document in snap!.documents {
+                    let dbUser = document.data()
+                    if (name != currUser.userID) {
+                        let name = dbUser["name"] as! String
+                        let positionX = dbUser["positionX"] as! Float
+                        let positionY = dbUser["positionY"] as! Float
+                        let spriteCol = dbUser["spriteCol"] as! Int
+                        let spriteRow = dbUser["spriteRow"] as! Int
+                        userDict[name] = User(userID: name, name: name, positionX: positionX, positionY: positionY, spriteRow: spriteRow, spriteCol: spriteCol)
+                        completion()
+                    }
+                }
+            }
+        }
+    }
     
     @objc func logInPressed(_ sender: LoadingButton) {
         sender.tintColor = .white
         sender.showLoader(userInteraction: true)
+        
         if let name = usernameTextField.text {
             currUser = User(userID: name, name: name)
             currUser.readFromDB {
-                self.navigationController?.pushViewController(OfficeViewController(), animated: true)
+                self.loadUserDict {
+                    self.navigationController?.pushViewController(OfficeViewController(), animated: true)
+                }
             }
-            
         }
     }
     
