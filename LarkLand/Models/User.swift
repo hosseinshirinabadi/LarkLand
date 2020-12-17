@@ -78,10 +78,12 @@ struct UserData {
     
     var name: String?
     var position: CGPoint?
+    var spriteCoordinate: [Int]?
     
-    init(name: String? = nil, position: CGPoint? = nil) {
+    init(name: String? = nil, position: CGPoint? = nil, spriteCoordinate: [Int]? = nil) {
         self.name = name
         self.position = position
+        self.spriteCoordinate = spriteCoordinate
     }
     
 }
