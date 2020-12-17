@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5826D1034F883A78C942666D /* Pods_LarkLand.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA03A503CAEFC070D08F4A4 /* Pods_LarkLand.framework */; };
 		940EDEA4258B16E20072C947 /* OfficeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940EDEA3258B16E20072C947 /* OfficeScene.swift */; };
+		940EDEA8258B335B0072C947 /* Structures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940EDEA7258B335B0072C947 /* Structures.swift */; };
+		940EDEAB258B36050072C947 /* Office.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940EDEAA258B36050072C947 /* Office.swift */; };
 		949A2481258AB80A00C48AD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949A2480258AB80A00C48AD4 /* AppDelegate.swift */; };
 		949A2483258AB80A00C48AD4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949A2482258AB80A00C48AD4 /* SceneDelegate.swift */; };
 		949A248A258AB80B00C48AD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 949A2489258AB80B00C48AD4 /* Assets.xcassets */; };
@@ -25,6 +27,8 @@
 		0198BF56985CE3E9E21E0BAD /* Pods-LarkLand.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LarkLand.debug.xcconfig"; path = "Target Support Files/Pods-LarkLand/Pods-LarkLand.debug.xcconfig"; sourceTree = "<group>"; };
 		83297D2F40E22C94F1EBF59D /* Pods-LarkLand.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LarkLand.release.xcconfig"; path = "Target Support Files/Pods-LarkLand/Pods-LarkLand.release.xcconfig"; sourceTree = "<group>"; };
 		940EDEA3258B16E20072C947 /* OfficeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeScene.swift; sourceTree = "<group>"; };
+		940EDEA7258B335B0072C947 /* Structures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structures.swift; sourceTree = "<group>"; };
+		940EDEAA258B36050072C947 /* Office.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Office.swift; sourceTree = "<group>"; };
 		949A247D258AB80A00C48AD4 /* LarkLand.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LarkLand.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		949A2480258AB80A00C48AD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		949A2482258AB80A00C48AD4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -117,6 +121,8 @@
 			isa = PBXGroup;
 			children = (
 				949A24EE258AEC0C00C48AD4 /* User.swift */,
+				940EDEAA258B36050072C947 /* Office.swift */,
+				940EDEA7258B335B0072C947 /* Structures.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -263,11 +269,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				949A2573258B044000C48AD4 /* OfficeViewController.swift in Sources */,
+				940EDEA8258B335B0072C947 /* Structures.swift in Sources */,
 				949A2570258AFC5500C48AD4 /* LoginViewController.swift in Sources */,
 				949A2543258AFAE900C48AD4 /* LoginView.swift in Sources */,
 				949A2481258AB80A00C48AD4 /* AppDelegate.swift in Sources */,
 				949A24E1258ABFF100C48AD4 /* LandingViewController.swift in Sources */,
 				949A24EF258AEC0C00C48AD4 /* User.swift in Sources */,
+				940EDEAB258B36050072C947 /* Office.swift in Sources */,
 				949A2483258AB80A00C48AD4 /* SceneDelegate.swift in Sources */,
 				940EDEA4258B16E20072C947 /* OfficeScene.swift in Sources */,
 			);

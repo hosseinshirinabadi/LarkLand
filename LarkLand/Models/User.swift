@@ -15,7 +15,6 @@ import Firebase
 class User {
     var userData: UserData
     var userID: String
-    var avatar: UIImage?
     
     init(userID: String) {
         self.userID = userID
@@ -51,7 +50,6 @@ class User {
     }
     
     func readFromDB(completion: @escaping () -> Void) {
-        
         let userRef = db.collection("users").document(userID)
         userRef.getDocument { (document, error) in
             if let document = document, document.exists {
@@ -61,7 +59,6 @@ class User {
                 self.userData.positionY = dataDescription?["positionY"] as? Float
                 self.userData.spriteRow = dataDescription?["spriteRow"] as? Int
                 self.userData.spriteCol = dataDescription?["spriteCol"] as? Int
-
                 completion()
             } else {
                 print("Document does not exist. inside user class")
@@ -79,43 +76,4 @@ class User {
         self.userData.spriteCol = spriteCol
     }
     
-    
-    
-    
-}
-
-
-
-struct UserData {
-    
-    var name: String?
-    var positionX: Float?
-    var positionY: Float?
-    var spriteCol: Int?
-    var spriteRow: Int?
-    
-    
-    init(name: String? = nil, positionX: Float? = nil, positionY: Float? = nil, spriteRow: Int? = nil, spriteCol: Int? = nil) {
-        self.name = name
-        self.positionX = positionX
-        self.positionY = positionY
-        self.spriteRow = spriteRow
-        self.spriteCol = spriteCol
-    }
-    
-}
-
-
-struct Office {
-    var people: [String]?
-    var name: String?
-}
-
-
-struct Constants {
-    static let officeName = "TikTok iOS"
-    static let positionX: Float = 0.1
-    static let positionY: Float = 0.5
-    static let spriteRowHossein: Int = 1
-    static let spriteColHossein: Int = 8
 }

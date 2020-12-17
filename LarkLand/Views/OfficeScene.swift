@@ -42,6 +42,8 @@ extension CGPoint {
     return self / length()
   }
 }
+let screenWidth = UIScreen.main.bounds.width
+let screenHeight = UIScreen.main.bounds.height
 
 
 
@@ -53,7 +55,7 @@ class OfficeScene: SKScene {
         static let monster   : UInt32 = 0b1       // 1
         static let projectile: UInt32 = 0b10      // 2
     }
-  
+    
     let player = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: Constants.spriteColHossein, row: Constants.spriteRowHossein))
     
     var monstersDestroyed = 0
@@ -94,35 +96,47 @@ class OfficeScene: SKScene {
         
     }
     
+    
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.white
-        self.setUpListener()
-        let positionX = Constants.positionX
-        let positionY = Constants.positionY
-        currUser.setPosition(positionX: positionX, positionY: positionY)
-        currUser.setSprite(spriteRow: Constants.spriteRowHossein, spriteCol: Constants.spriteColHossein)
-        currUser.addToDB {}
+        let positionX: Float!
+        let positionY: Float!
+        
+        if (currUser.userData.positionX == nil || currUser.userData.positionY == nil) {
+            print("couldn't find user position")
+            positionX = Constants.positionX
+            positionY = Constants.positionY
+            currUser.setPosition(positionX: positionX, positionY: positionY)
+            currUser.setSprite(spriteRow: Constants.spriteRowHossein, spriteCol: Constants.spriteColHossein)
+            currUser.addToDB {}
+        } else {
+            positionX = currUser.userData.positionX!
+            positionY = currUser.userData.positionY!
+        }
+        
+        
         player.position = CGPoint(x: size.width * CGFloat(positionX), y: size.height * CGFloat(positionY))
         addChild(player)
         physicsWorld.gravity = .zero
         physicsWorld.contactDelegate = self
-//        addFriends()
-//    run(SKAction.repeatForever(
-//      SKAction.sequence([
-//        SKAction.run(addMonster),
-//        SKAction.wait(forDuration: 1.0)
-//        ])
-//    ))
-    
-  }
+        
+        run(SKAction.repeatForever(
+            SKAction.sequence([
+            SKAction.run(self.loadOffice),
+            SKAction.wait(forDuration: 0.1)
+            ])
+        ))
+    }
   
-
+    func loadOffice() {
+        
+    }
   
     func addFriend(name: String) {
     // Create sprite
         let user = userDict[name]
         if (friendNodeDict[name] != nil) {
-            friendNodeDict[name]?.position = CGPoint(x: size.width * CGFloat((user?.userData.positionX)!), y: size.height/2 * CGFloat((user?.userData.positionY)!))
+            friendNodeDict[name]?.position = CGPoint(x: size.width * CGFloat((user?.userData.positionX)!), y: size.height * CGFloat((user?.userData.positionY)!))
         } else {
             let friend = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: user!.userData.spriteCol!, row: user!.userData.spriteRow!))
     //        let friend = SKSpriteNode(imageNamed: "monster")
@@ -133,7 +147,7 @@ class OfficeScene: SKScene {
             friend.physicsBody?.contactTestBitMask = PhysicsCategory.projectile // 4
             friend.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
             
-            friend.position = CGPoint(x: size.width * CGFloat((user?.userData.positionX)!), y: size.height/2 * CGFloat((user?.userData.positionY)!))
+            friend.position = CGPoint(x: size.width * CGFloat((user?.userData.positionX)!), y: size.height * CGFloat((user?.userData.positionY)!))
             
             addChild(friend)
         }
@@ -167,15 +181,15 @@ class OfficeScene: SKScene {
     let offset = touchLocation - player.position
     let shootAmount = offset
     let realDest = shootAmount + player.position
-    let actionMove = SKAction.move(to: realDest, duration: 2.0)
-    
+    let movementTime = Float(realDest.length()) / Constants.speed
+    let actionMove = SKAction.move(to: realDest, duration: TimeInterval(movementTime))
     var dbCount = 0
     player.run(actionMove)
-    Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { timer in
+    Timer.scheduledTimer(withTimeInterval: TimeInterval(movementTime / Float(Constants.numSteps)), repeats: true) { timer in
         dbCount += 1
-        currUser.setPosition(positionX: Float(self.player.position.x), positionY: Float(self.player.position.y))
+        currUser.setPosition(positionX: Float(self.player.position.x / screenWidth), positionY: Float(self.player.position.y / screenHeight))
         currUser.addToDB{}
-        if (dbCount == 10) {
+        if (dbCount == Constants.numSteps) {
             timer.invalidate()
         }
     }
