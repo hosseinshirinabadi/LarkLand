@@ -16,6 +16,9 @@
 		949A24E1258ABFF100C48AD4 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949A24E0258ABFF000C48AD4 /* LandingViewController.swift */; };
 		949A24E8258AD21600C48AD4 /* LandingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949A24E7258AD21600C48AD4 /* LandingView.swift */; };
 		949A24EF258AEC0C00C48AD4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949A24EE258AEC0C00C48AD4 /* User.swift */; };
+		949A2543258AFAE900C48AD4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949A2542258AFAE900C48AD4 /* LoginView.swift */; };
+		949A2570258AFC5500C48AD4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949A256F258AFC5500C48AD4 /* LoginViewController.swift */; };
+		949A2573258B044000C48AD4 /* OfficeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949A2572258B044000C48AD4 /* OfficeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +34,9 @@
 		949A24E0258ABFF000C48AD4 /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
 		949A24E7258AD21600C48AD4 /* LandingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingView.swift; sourceTree = "<group>"; };
 		949A24EE258AEC0C00C48AD4 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		949A2542258AFAE900C48AD4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		949A256F258AFC5500C48AD4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		949A2572258B044000C48AD4 /* OfficeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeViewController.swift; sourceTree = "<group>"; };
 		CEA03A503CAEFC070D08F4A4 /* Pods_LarkLand.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LarkLand.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -92,6 +98,8 @@
 				949A24E0258ABFF000C48AD4 /* LandingViewController.swift */,
 				949A2480258AB80A00C48AD4 /* AppDelegate.swift */,
 				949A2482258AB80A00C48AD4 /* SceneDelegate.swift */,
+				949A256F258AFC5500C48AD4 /* LoginViewController.swift */,
+				949A2572258B044000C48AD4 /* OfficeViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -100,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				949A24E7258AD21600C48AD4 /* LandingView.swift */,
+				949A2542258AFAE900C48AD4 /* LoginView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -253,6 +262,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				949A2573258B044000C48AD4 /* OfficeViewController.swift in Sources */,
+				949A2570258AFC5500C48AD4 /* LoginViewController.swift in Sources */,
+				949A2543258AFAE900C48AD4 /* LoginView.swift in Sources */,
 				949A24E8258AD21600C48AD4 /* LandingView.swift in Sources */,
 				949A2481258AB80A00C48AD4 /* AppDelegate.swift in Sources */,
 				949A24E1258ABFF100C48AD4 /* LandingViewController.swift in Sources */,

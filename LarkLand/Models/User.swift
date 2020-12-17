@@ -11,13 +11,10 @@ import CoreData
 import Firebase
 
 
-let db = Firestore.firestore()
-let storage = Storage.storage()
-
 
 class User {
-    var userData: UserData?
-    var userID: String?
+    var userData: UserData
+    var userID: String
     var avatar: UIImage?
     
     init(userID: String) {
@@ -25,16 +22,35 @@ class User {
         self.userData = UserData()
     }
     
+    init(userID: String, name: String) {
+        self.userID = userID
+        self.userData = UserData(name: name)
+    }
     
+    func addToDB(completion: @escaping () -> Void) {
+        
+        let userdata = [
+            "name": userData.name,
+            "position": userData.position,
+        ] as [String : Any]
+        db.collection("users").document(userID).setData(userdata)
+        {err in
+            if let err = err {
+                print("Error adding user: \(err)")
+            }
+            completion()
+        }
+        
+    }
     
     func readDataFromDB(completion: @escaping () -> Void) {
         
-        let userRef = db.collection("users").document(userID!)
+        let userRef = db.collection("users").document(userID)
         userRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 let dataDescription = document.data()
-                self.userData?.name = dataDescription?["name"] as? String
-                self.userData?.position = dataDescription?["position"] as? CGPoint
+                self.userData.name = dataDescription?["name"] as? String
+                self.userData.position = dataDescription?["position"] as? CGPoint
                 completion()
             } else {
                 print("Document does not exist. inside user class")
@@ -42,11 +58,11 @@ class User {
         }
     }
     
-    func readFromDB(completion: @escaping (UserData) -> Void) {
+    func readFromDB(completion: @escaping () -> Void) {
         self.readDataFromDB {
-            self.downloadProfilePhoto(userID: self.userID!) { image in
+            self.downloadProfilePhoto(userID: self.userID) { image in
                 self.avatar = image
-                completion(self.userData!)
+                completion()
             }
         }
     }
@@ -94,5 +110,5 @@ struct Office {
 
 
 struct Constants {
-    let officeName = "TikTok iOS"
+    static let officeName = "TikTok iOS"
 }

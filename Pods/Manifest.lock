@@ -383,6 +383,7 @@ PODS:
   - IGListDiffKit (4.0.0)
   - KeychainAccess (4.1.0)
   - leveldb-library (1.22)
+  - MHLoadingButton (0.1.2)
   - nanopb (1.30906.0):
     - nanopb/decode (= 1.30906.0)
     - nanopb/encode (= 1.30906.0)
@@ -391,6 +392,7 @@ PODS:
   - PromisesObjC (1.2.11)
   - Protobuf (3.14.0)
   - TwilioVideo (3.8.0)
+  - UIImageCropper (1.4.0)
 
 DEPENDENCIES:
   - Alamofire (= 5.0.2)
@@ -406,7 +408,9 @@ DEPENDENCIES:
   - FirebaseUI/Google (= 8.4.0)
   - IGListDiffKit (= 4.0.0)
   - KeychainAccess (= 4.1.0)
+  - MHLoadingButton
   - TwilioVideo (~> 3.4)
+  - UIImageCropper
 
 SPEC REPOS:
   trunk:
@@ -440,10 +444,12 @@ SPEC REPOS:
     - IGListDiffKit
     - KeychainAccess
     - leveldb-library
+    - MHLoadingButton
     - nanopb
     - PromisesObjC
     - Protobuf
     - TwilioVideo
+    - UIImageCropper
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -476,11 +482,13 @@ SPEC CHECKSUMS:
   IGListDiffKit: 665d6cf43ce726e676013db9c7d6c4294259b6b2
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
+  MHLoadingButton: a08f05dfe866e6b2febd97884c1cf1427d25f6f0
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   Protobuf: 0cde852566359049847168e51bd1c690e0f70056
   TwilioVideo: c13a51ceca375e91620eb7578d2573c90cf53b46
+  UIImageCropper: ab1c519018189af90b0780e1c7c9c900945b896e
 
-PODFILE CHECKSUM: 3abc22bcce264a071c4fa05964acf564a77ed375
+PODFILE CHECKSUM: 95d444b04c209f291e21cb3e19453816be36e281
 
 COCOAPODS: 1.10.0
