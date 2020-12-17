@@ -111,6 +111,7 @@ struct Constants {
     static let officeName = "TikTok iOS"
     static let positionX: Float = 0.1
     static let positionY: Float = 0.5
-    static let spriteRowHossein: Int = 1
-    static let spriteColHossein: Int = 8
+    static let spriteRowHossein: Int = 3
+    static let spriteColHossein: Int = 1
+    static let numSteps: Int = 10
 }
