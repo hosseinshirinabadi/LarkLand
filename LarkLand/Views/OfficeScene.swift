@@ -79,10 +79,9 @@ class OfficeScene: SKScene {
                 print(spriteRow)
                 print(spriteCol)
                 if (diff.type == .added || diff.type == .modified) {
+                    
                     if (currUser.userData.name != name && userDict[name] != nil) {
-                        userDict[name]!.userData.positionX = positionX
-                        userDict[name]!.userData.positionY = positionY
-                        self.addFriend(name: name)
+                        self.moveFriend(user: userDict[name]!, positionX: positionX, positionY: positionY)
                     } else if (currUser.userData.name != name) {
                         userDict[name] = User(userID: name, name: name, positionX: positionX, positionY: positionY, spriteRow: spriteRow, spriteCol: spriteCol)
                         self.addFriend(name: name)
@@ -96,23 +95,30 @@ class OfficeScene: SKScene {
         
     }
     
+    func loadUserDict() {
+        
+    }
+    
     
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.white
         let positionX: Float!
         let positionY: Float!
-        
+        setUpListener()
         if (currUser.userData.positionX == nil || currUser.userData.positionY == nil) {
             print("couldn't find user position")
             positionX = Constants.positionX
             positionY = Constants.positionY
             currUser.setPosition(positionX: positionX, positionY: positionY)
-            currUser.setSprite(spriteRow: Constants.spriteRowHossein, spriteCol: Constants.spriteColHossein)
-            currUser.addToDB {}
+            currUser.setSprite(spriteRow: currUser.userData.spriteRow!, spriteCol: currUser.userData.spriteCol!)
         } else {
             positionX = currUser.userData.positionX!
             positionY = currUser.userData.positionY!
+            print(currUser.userData.spriteRow!)
+            print(currUser.userData.spriteCol!)
+            currUser.setSprite(spriteRow: currUser.userData.spriteRow!, spriteCol: currUser.userData.spriteCol!)
         }
+        currUser.addToDB {}
         
         
         player.position = CGPoint(x: size.width * CGFloat(positionX), y: size.height * CGFloat(positionY))
@@ -135,8 +141,8 @@ class OfficeScene: SKScene {
     func addFriend(name: String) {
     // Create sprite
         let user = userDict[name]
-        if (friendNodeDict[name] != nil) {
-            friendNodeDict[name]?.position = CGPoint(x: size.width * CGFloat((user?.userData.positionX)!), y: size.height * CGFloat((user?.userData.positionY)!))
+        if (friendNodeDict[name] != nil && user != nil) {
+            
         } else {
             let friend = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: user!.userData.spriteCol!, row: user!.userData.spriteRow!))
     //        let friend = SKSpriteNode(imageNamed: "monster")
@@ -168,6 +174,17 @@ class OfficeScene: SKScene {
 //    monster.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
   }
   
+    
+    func moveFriend(user: User, positionX: Float, positionY: Float) {
+        let previousPoint = CGPoint(x: size.width * CGFloat((user.userData.positionX)!), y: size.height * CGFloat((user.userData.positionY)!))
+        let newPoint = CGPoint(x: size.width * CGFloat(positionX), y: size.height * CGFloat(positionY))
+        let offset = newPoint - previousPoint
+        let shootAmount = offset
+        let realDest = shootAmount + previousPoint
+        let movementTime = Float(realDest.length()) / Constants.speed
+        let actionMove = SKAction.move(to: realDest, duration: TimeInterval(movementTime))
+        player.run(actionMove)
+    }
     
     
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
