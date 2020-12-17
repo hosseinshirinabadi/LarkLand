@@ -8,6 +8,9 @@
 import Foundation
 import SpriteKit
 
+var userDict = [String:User]()
+var friendNodeDict = [String:SKSpriteNode]()
+
 func +(left: CGPoint, right: CGPoint) -> CGPoint {
   return CGPoint(x: left.x + right.x, y: left.y + right.y)
 }
@@ -42,6 +45,8 @@ extension CGPoint {
 let screenWidth = UIScreen.main.bounds.width
 let screenHeight = UIScreen.main.bounds.height
 
+
+
 class OfficeScene: SKScene {
   
     struct PhysicsCategory {
@@ -54,6 +59,42 @@ class OfficeScene: SKScene {
     let player = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: Constants.spriteColHossein, row: Constants.spriteRowHossein))
     
     var monstersDestroyed = 0
+    
+    func setUpListener() {
+        db.collection("users").addSnapshotListener { querySnapshot, error in
+            guard let snapshot = querySnapshot else {
+                print("Error fetching snapshots: \(error!)")
+                return
+            }
+            snapshot.documentChanges.forEach { diff in
+                let dbUser = diff.document.data()
+                let name = dbUser["name"] as! String
+                let positionX = dbUser["positionX"] as! Float
+                let positionY = dbUser["positionY"] as! Float
+                let spriteCol = dbUser["spriteCol"] as! Int
+                let spriteRow = dbUser["spriteRow"] as! Int
+                print(name)
+                print(positionX)
+                print(positionY)
+                print(spriteRow)
+                print(spriteCol)
+                if (diff.type == .added || diff.type == .modified) {
+                    if (currUser.userData.name != name && userDict[name] != nil) {
+                        userDict[name]!.userData.positionX = positionX
+                        userDict[name]!.userData.positionY = positionY
+                        self.addFriend(name: name)
+                    } else if (currUser.userData.name != name) {
+                        userDict[name] = User(userID: name, name: name, positionX: positionX, positionY: positionY, spriteRow: spriteRow, spriteCol: spriteCol)
+                        self.addFriend(name: name)
+                    }
+                }
+                if (diff.type == .removed) {
+                    print("Removed city: \(diff.document.data())")
+                }
+            }
+        }
+        
+    }
     
     
     override func didMove(to view: SKView) {
@@ -78,7 +119,6 @@ class OfficeScene: SKScene {
         addChild(player)
         physicsWorld.gravity = .zero
         physicsWorld.contactDelegate = self
-        addFriend()
         
         run(SKAction.repeatForever(
             SKAction.sequence([
@@ -92,20 +132,26 @@ class OfficeScene: SKScene {
         
     }
   
-  func addFriend() {
+    func addFriend(name: String) {
     // Create sprite
-    let friend = SKSpriteNode(imageNamed: "monster")
+        let user = userDict[name]
+        if (friendNodeDict[name] != nil) {
+            friendNodeDict[name]?.position = CGPoint(x: size.width * CGFloat((user?.userData.positionX)!), y: size.height * CGFloat((user?.userData.positionY)!))
+        } else {
+            let friend = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: user!.userData.spriteCol!, row: user!.userData.spriteRow!))
+    //        let friend = SKSpriteNode(imageNamed: "monster")
+            
+            friend.physicsBody = SKPhysicsBody(rectangleOf: friend.size) // 1
+            friend.physicsBody?.isDynamic = true // 2
+            friend.physicsBody?.categoryBitMask = PhysicsCategory.monster // 3
+            friend.physicsBody?.contactTestBitMask = PhysicsCategory.projectile // 4
+            friend.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
+            
+            friend.position = CGPoint(x: size.width * CGFloat((user?.userData.positionX)!), y: size.height * CGFloat((user?.userData.positionY)!))
+            
+            addChild(friend)
+        }
     
-    friend.physicsBody = SKPhysicsBody(rectangleOf: friend.size) // 1
-    friend.physicsBody?.isDynamic = true // 2
-    friend.physicsBody?.categoryBitMask = PhysicsCategory.monster // 3
-    friend.physicsBody?.contactTestBitMask = PhysicsCategory.projectile // 4
-    friend.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
-    
-    
-    friend.position = CGPoint(x: size.width/2, y: size.height/2)
-    
-    addChild(friend)
     
     // Determine speed of the monster
 //    let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))

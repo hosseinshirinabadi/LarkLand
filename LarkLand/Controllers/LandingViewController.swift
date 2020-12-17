@@ -8,7 +8,6 @@
 import UIKit
 import SpriteKit
 
-
 class LandingViewController: UIViewController {
     
     override func viewDidLoad() {
