@@ -58,7 +58,6 @@ class OfficeScene: SKScene {
     
     let player = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: currUser.userData.spriteCol!, row: currUser.userData.spriteRow!))
     
-    var monstersDestroyed = 0
     
     func setUpListener() {
         db.collection("users").addSnapshotListener { querySnapshot, error in
@@ -73,19 +72,11 @@ class OfficeScene: SKScene {
                 let positionY = dbUser["positionY"] as! Float
                 let spriteCol = dbUser["spriteCol"] as! Int
                 let spriteRow = dbUser["spriteRow"] as! Int
-                print(name)
-                print(positionX)
-                print(positionY)
-                print(spriteRow)
-                print(spriteCol)
-                if (diff.type == .added || diff.type == .modified) {
-                    
-                    if (currUser.userData.name != name && userDict[name] != nil) {
-                        self.moveFriend(user: userDict[name]!, positionX: positionX, positionY: positionY)
-                    }
-                }
-                if (diff.type == .removed) {
-                    print("Removed city: \(diff.document.data())")
+                if (diff.type == .added && currUser.userData.name != name) {
+                    userDict[name] = User(userID: name, name: name, positionX: positionX, positionY: positionY, spriteRow: spriteRow, spriteCol: spriteCol)
+                    self.addFriend(name: name)
+                } else if(diff.type == .modified && currUser.userData.name != name) {
+                    self.moveFriend(user: userDict[name]!, positionX: positionX, positionY: positionY)
                 }
             }
         }
@@ -122,7 +113,6 @@ class OfficeScene: SKScene {
             currUser.setSprite(spriteRow: currUser.userData.spriteRow!, spriteCol: currUser.userData.spriteCol!)
         }
         currUser.addToDB {}
-        
         
         player.position = CGPoint(x: size.width * CGFloat(positionX), y: size.height * CGFloat(positionY))
         addChild(player)
@@ -218,7 +208,7 @@ class OfficeScene: SKScene {
     projectile.removeFromParent()
     monster.removeFromParent()
     
-    monstersDestroyed += 1
+    var monstersDestroyed = 1
     if monstersDestroyed > 30 {
     let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
 //      let gameOverScene = GameOverScene(size: self.size, won: true)
