@@ -23,20 +23,7 @@ struct UserData {
     }
     
 }
-struct OfficeData {
-    var people: [String]?
-    var name: String?
-    
-    init(people: [String]? = nil, name: String? = nil) {
-        self.people = people
-        self.name = name
-    }
-}
 
-//public enum personData: String {
-//    case hossein = "logInButton"
-//    case Stephen = "signUpButton"
-//}
 
 struct Constants {
     static let officeName = "TikTok iOS"
