@@ -69,12 +69,13 @@ class LogInViewController: UIViewController {
     }
     
     func loadUserDict(completion: @escaping () -> Void) {
-        let userRef = db.collection.getDocuments() { (snap, error) in
-            if let err = err {
+        let _ = db.collection("users").getDocuments() { (snap, error) in
+            if let err = error {
                     print("Error getting documents: \(err)")
             } else {
                 for document in snap!.documents {
                     let dbUser = document.data()
+                    let name = dbUser["name"] as! String
                     if (name != currUser.userID) {
                         let name = dbUser["name"] as! String
                         let positionX = dbUser["positionX"] as! Float

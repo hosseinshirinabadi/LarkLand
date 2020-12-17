@@ -57,8 +57,8 @@ class OfficeScene: SKScene {
     }
     
     let player = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: currUser.userData.spriteCol!, row: currUser.userData.spriteRow!))
-    
-    var monstersDestroyed = 0
+//    var timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(detectProximity), userInfo: nil, repeats: true)
+    var isClose = false
     
     func setUpListener() {
         db.collection("users").addSnapshotListener { querySnapshot, error in
@@ -73,26 +73,15 @@ class OfficeScene: SKScene {
                 let positionY = dbUser["positionY"] as! Float
                 let spriteCol = dbUser["spriteCol"] as! Int
                 let spriteRow = dbUser["spriteRow"] as! Int
-                print(name)
-                print(positionX)
-                print(positionY)
-                print(spriteRow)
-                print(spriteCol)
-                if (diff.type == .added || diff.type == .modified) {
-                    
-                    if (currUser.userData.name != name && userDict[name] != nil) {
-                        self.moveFriend(user: userDict[name]!, positionX: positionX, positionY: positionY)
-                    }
-                }
-                if (diff.type == .removed) {
-                    print("Removed city: \(diff.document.data())")
+//                if (diff.type == .added && currUser.userData.name != name) {
+//                    userDict[name] = User(userID: name, name: name, positionX: positionX, positionY: positionY, spriteRow: spriteRow, spriteCol: spriteCol)
+//                    self.addFriend(name: name)
+//                }
+                if(diff.type == .modified && currUser.userData.name != name) {
+                    self.moveFriend(user: userDict[name]!, positionX: positionX, positionY: positionY)
                 }
             }
         }
-        
-    }
-    
-    func loadUserDict() {
         
     }
     
@@ -107,13 +96,16 @@ class OfficeScene: SKScene {
         backgroundColor = SKColor.white
         let positionX: Float!
         let positionY: Float!
+        addUsers()
         setUpListener()
+        
         if (currUser.userData.positionX == nil || currUser.userData.positionY == nil) {
             print("couldn't find user position")
             positionX = Constants.positionX
             positionY = Constants.positionY
             currUser.setPosition(positionX: positionX, positionY: positionY)
             currUser.setSprite(spriteRow: currUser.userData.spriteRow!, spriteCol: currUser.userData.spriteCol!)
+            currUser.addToDB {}
         } else {
             positionX = currUser.userData.positionX!
             positionY = currUser.userData.positionY!
@@ -121,31 +113,43 @@ class OfficeScene: SKScene {
             print(currUser.userData.spriteCol!)
             currUser.setSprite(spriteRow: currUser.userData.spriteRow!, spriteCol: currUser.userData.spriteCol!)
         }
-        currUser.addToDB {}
-        
         
         player.position = CGPoint(x: size.width * CGFloat(positionX), y: size.height * CGFloat(positionY))
         addChild(player)
         physicsWorld.gravity = .zero
         physicsWorld.contactDelegate = self
-        
         run(SKAction.repeatForever(
-            SKAction.sequence([
-            SKAction.run(self.loadOffice),
-            SKAction.wait(forDuration: 0.1)
-            ])
+              SKAction.sequence([
+                SKAction.run(detectProximity),
+                SKAction.wait(forDuration: 0.1)
+                ])
         ))
     }
-  
-    func loadOffice() {
-        
+    
+    func detectProximity() {
+//        var closePeople: [SKSpriteNode] = []
+        for (name, sprite) in friendNodeDict {
+            if (player.position - sprite.position).length() < 50 && !isClose {
+                print(name + " is close to you")
+                isClose = true
+                startVideo()
+//                timer.invalidate()
+            } else if (isClose && (player.position - sprite.position).length() < 50) {
+                print("in call")
+            } else {
+                isClose = false
+            }
+        }
     }
-  
+    
+    func startVideo() {
+        print("video starts")
+    }
+    
     func addFriend(name: String) {
     // Create sprite
         let user = userDict[name]
         let friend = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: user!.userData.spriteCol!, row: user!.userData.spriteRow!))
-//        let friend = SKSpriteNode(imageNamed: "monster")
         
         friend.physicsBody = SKPhysicsBody(rectangleOf: friend.size) // 1
         friend.physicsBody?.isDynamic = true // 2
@@ -157,22 +161,7 @@ class OfficeScene: SKScene {
         
         addChild(friend)
         friendNodeDict[name] = friend
-    
-    
-    // Determine speed of the monster
-//    let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))
-    
-    // Create the actions
-//    let actionMove = SKAction.move(to: CGPoint(x: -monster.size.width/2, y: actualY), duration: TimeInterval(actualDuration))
-//    let actionMoveDone = SKAction.removeFromParent()
-//    let loseAction = SKAction.run() { [weak self] in
-//      guard let `self` = self else { return }
-//      let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-////      let gameOverScene = GameOverScene(size: self.size, won: false)
-////      self.view?.presentScene(gameOverScene, transition: reveal)
-//    }
-//    monster.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
-  }
+    }
   
     
     func moveFriend(user: User, positionX: Float, positionY: Float) {
@@ -218,7 +207,7 @@ class OfficeScene: SKScene {
     projectile.removeFromParent()
     monster.removeFromParent()
     
-    monstersDestroyed += 1
+    var monstersDestroyed = 1
     if monstersDestroyed > 30 {
     let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
 //      let gameOverScene = GameOverScene(size: self.size, won: true)
