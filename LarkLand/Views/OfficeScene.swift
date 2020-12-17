@@ -66,7 +66,7 @@ class OfficeScene: SKScene {
 
     let player = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: currUser.userData.spriteCol!, row: currUser.userData.spriteRow!))
     var isClose = false
-
+    
     func setUpListener() {
         db.collection("users").addSnapshotListener { querySnapshot, error in
             guard let snapshot = querySnapshot else {
@@ -95,8 +95,19 @@ class OfficeScene: SKScene {
         }
     }
     
+
+    @objc func areTheyCloseFunction() {
+        var closePeople: [SKSpriteNode] = []
+        for (name, sprite) in friendNodeDict {
+            
+        }
+    }
+    
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.white
+        var backgroundImage = SKSpriteNode(imageNamed: "larkland")
+        backgroundImage.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
+        addChild(backgroundImage)
         let positionX: Float!
         let positionY: Float!
         addUsers()
@@ -118,6 +129,7 @@ class OfficeScene: SKScene {
         }
         
         player.position = CGPoint(x: size.width * CGFloat(positionX), y: size.height * CGFloat(positionY))
+        player.size = CGSize(width: player.size.width * CGFloat(1.5), height: player.size.height * CGFloat(1.5))
         addChild(player)
         physicsWorld.gravity = .zero
         physicsWorld.contactDelegate = self
@@ -161,7 +173,7 @@ class OfficeScene: SKScene {
         friend.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
         
         friend.position = CGPoint(x: size.width * CGFloat((user?.userData.positionX)!), y: size.height * CGFloat((user?.userData.positionY)!))
-        
+        friend.size = CGSize(width: friend.size.width * CGFloat(1.5), height: friend.size.height * CGFloat(1.5))
         addChild(friend)
         friendNodeDict[name] = friend
 
@@ -286,4 +298,8 @@ class SpriteSheet {
         return SKTexture(rect: textureRect, in: self.texture)
     }
 
+}
+
+extension UIImage {
+    
 }

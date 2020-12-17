@@ -28,6 +28,9 @@ class OfficeViewController: UIViewController, VideoCallDelegate {
     
     override func loadView() {
         self.view = SKView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        print(UIScreen.main.bounds.width)
+        print(UIScreen.main.bounds.height)
+        
     }
     
     override func viewDidLoad() {
