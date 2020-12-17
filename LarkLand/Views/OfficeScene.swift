@@ -148,7 +148,7 @@ class OfficeScene: SKScene {
                 isClose = true
                 videoDelegate?.enableCall(participant: name)
             } else if (isClose && (player.position - sprite.position).length() < 50) {
-                print("in call")
+//                print("in call")
             } else {
                 isClose = false
                 videoDelegate?.disableCall(participant: name)
