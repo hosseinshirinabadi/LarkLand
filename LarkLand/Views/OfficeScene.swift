@@ -52,6 +52,7 @@ class OfficeScene: SKScene {
     let player = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: Constants.spriteColHossein, row: Constants.spriteRowHossein))
     
     var monstersDestroyed = 0
+    
   
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.white
@@ -105,6 +106,8 @@ class OfficeScene: SKScene {
 //    monster.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
   }
   
+    
+    
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
     // 1 - Choose one of the touches to work with
     guard let touch = touches.first else {
@@ -117,9 +120,16 @@ class OfficeScene: SKScene {
     let shootAmount = offset
     let realDest = shootAmount + player.position
     let actionMove = SKAction.move(to: realDest, duration: 2.0)
+    var dbCount = 0
     player.run(actionMove)
-    currUser.setPosition(positionX: Float(player.position.x), positionY: Float(player.position.y))
-    currUser.addToDB{}
+    Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { timer in
+        dbCount += 1
+        currUser.setPosition(positionX: Float(self.player.position.x), positionY: Float(self.player.position.y))
+        currUser.addToDB{}
+        if (dbCount == 10) {
+            timer.invalidate()
+        }
+    }
   }
   
   func projectileDidCollideWithMonster(projectile: SKSpriteNode, monster: SKSpriteNode) {
