@@ -64,8 +64,8 @@ class GameScene: SKScene {
     physicsWorld.gravity = .zero
     physicsWorld.contactDelegate = self
     
-    
-    SKAction.run(addMonster)
+    addFriend()
+//    run(SKAction.run(addMonster))
     
 //    run(SKAction.repeatForever(
 //      SKAction.sequence([
@@ -84,7 +84,7 @@ class GameScene: SKScene {
     return random() * (max - min) + min
   }
   
-  func addMonster() {
+  func addFriend() {
     // Create sprite
     let monster = SKSpriteNode(imageNamed: "monster")
     
@@ -94,11 +94,7 @@ class GameScene: SKScene {
     monster.physicsBody?.contactTestBitMask = PhysicsCategory.projectile // 4
     monster.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
     
-    // Determine where to spawn the monster along the Y axis
-    let actualY = random(min: monster.size.height/2, max: size.height - monster.size.height/2)
     
-    // Position the monster slightly off-screen along the right edge,
-    // and along a random position along the Y axis as calculated above
     monster.position = CGPoint(x: size.width/2, y: size.height/2)
     
     // Add the monster to the scene
@@ -127,25 +123,10 @@ class GameScene: SKScene {
     
     let touchLocation = touch.location(in: self)
     
-    // 2 - Set up initial location of projectile
-    let projectile = SKSpriteNode(imageNamed: "projectile")
-    projectile.position = player.position
     
-    projectile.physicsBody = SKPhysicsBody(circleOfRadius: projectile.size.width/2)
-    projectile.physicsBody?.isDynamic = true
-    projectile.physicsBody?.categoryBitMask = PhysicsCategory.projectile
-    projectile.physicsBody?.contactTestBitMask = PhysicsCategory.monster
-    projectile.physicsBody?.collisionBitMask = PhysicsCategory.none
-    projectile.physicsBody?.usesPreciseCollisionDetection = true
+    // 3 - Determine offset of new location
+    let offset = touchLocation - player.position
     
-    // 3 - Determine offset of location to projectile
-    let offset = touchLocation - projectile.position
-    
-    // 4 - Bail out if you are shooting down or backwards
-    if offset.x < 0 { return }
-    
-    // 5 - OK to add now - you've double checked position
-    addChild(projectile)
     
     // 6 - Get the direction of where to shoot
     let direction = offset.normalized()
@@ -154,12 +135,11 @@ class GameScene: SKScene {
     let shootAmount = direction * 1000
     
     // 8 - Add the shoot amount to the current position
-    let realDest = shootAmount + projectile.position
+    let realDest = shootAmount + player.position
     
     // 9 - Create the actions
-    let actionMove = SKAction.move(to: realDest, duration: 2.0)
-    let actionMoveDone = SKAction.removeFromParent()
-    projectile.run(SKAction.sequence([actionMove, actionMoveDone]))
+    let actionMove = SKAction.move(to: realDest, duration: 3)
+    player.run(actionMove)
   }
   
   func projectileDidCollideWithMonster(projectile: SKSpriteNode, monster: SKSpriteNode) {
