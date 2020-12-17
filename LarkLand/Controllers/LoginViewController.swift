@@ -71,10 +71,11 @@ class LogInViewController: UIViewController {
         sender.tintColor = .white
         sender.showLoader(userInteraction: true)
         if let name = usernameTextField.text {
-            let userID = UUID().uuidString
             currUser = User(userID: name, name: name)
+            currUser.readFromDB {
+                self.navigationController?.pushViewController(OfficeViewController(), animated: true)
+            }
             
-            self.navigationController?.pushViewController(OfficeViewController(), animated: true)
         }
     }
     
