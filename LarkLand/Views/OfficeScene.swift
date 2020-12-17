@@ -11,6 +11,7 @@ import TwilioVideo
 
 var userDict = [String:User]()
 var friendNodeDict = [String:SKSpriteNode]()
+var friendLabelNodeDict = [String:SKLabelNode]()
 
 func +(left: CGPoint, right: CGPoint) -> CGPoint {
   return CGPoint(x: left.x + right.x, y: left.y + right.y)
@@ -135,7 +136,7 @@ class OfficeScene: SKScene {
         player.size = CGSize(width: player.size.width * CGFloat(1.5), height: player.size.height * CGFloat(1.5))
         playerLabel.text = currUser.userID
         playerLabel.fontSize = 15
-        playerLabel.position = CGPoint(x: size.width * CGFloat(positionX), y: size.height * CGFloat(positionY) + player.size.height)
+        playerLabel.position = CGPoint(x: size.width * CGFloat(positionX), y: size.height * CGFloat(positionY) + player.size.height / 2)
         
         addChild(player)
         addChild(playerLabel)
@@ -173,6 +174,11 @@ class OfficeScene: SKScene {
     // Create sprite
         let user = userDict[name]
         let friend = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: user!.userData.spriteCol!, row: user!.userData.spriteRow!))
+        let friendLabel = SKLabelNode(fontNamed: "AmericanTypewriter-Bold")
+        friendLabel.text = user?.userID
+        friendLabel.fontSize = 15
+        friendLabel.position = CGPoint(x: size.width * CGFloat((user?.userData.positionX)!), y: size.height * CGFloat((user?.userData.positionY)!) + friend.size.height / 2)
+        
         
         friend.physicsBody = SKPhysicsBody(rectangleOf: friend.size) // 1
         friend.physicsBody?.isDynamic = true // 2
@@ -183,6 +189,8 @@ class OfficeScene: SKScene {
         friend.position = CGPoint(x: size.width * CGFloat((user?.userData.positionX)!), y: size.height * CGFloat((user?.userData.positionY)!))
         friend.size = CGSize(width: friend.size.width * CGFloat(1.5), height: friend.size.height * CGFloat(1.5))
         addChild(friend)
+        addChild(friendLabel)
+        friendLabelNodeDict[name] = friendLabel
         friendNodeDict[name] = friend
 
   }
@@ -196,7 +204,14 @@ class OfficeScene: SKScene {
         let realDest = shootAmount + previousPoint
         let movementTime = Float(realDest.length()) / Constants.speed
         let actionMove = SKAction.move(to: realDest, duration: TimeInterval(movementTime))
+        
         let friend = friendNodeDict[user.userData.name!]
+        let labelLoc = CGPoint(x: size.width * CGFloat((user.userData.positionX)!), y: size.height * CGFloat((user.userData.positionY)!) + friend!.size.height / 2)
+        let labelOffset = CGPoint(x: CGFloat(positionX), y: CGFloat(positionY) + CGFloat((friend?.size.height)! / 2)) - labelLoc
+        let labelDest = labelOffset + labelLoc
+        let labelActionMove = SKAction.move(to: labelDest, duration: TimeInterval(movementTime))
+        let friendLabel = friendLabelNodeDict[user.userData.name!]
+        friendLabel!.run(labelActionMove)
         friend!.run(actionMove)
     }
     
@@ -212,12 +227,12 @@ class OfficeScene: SKScene {
     }
     
     let touchLocation = touch.location(in: self)
-    
+    let labelLoc = CGPoint(x: size.width * CGFloat(currUser.userData.positionX!), y: size.height * CGFloat(currUser.userData.positionY!) + player.size.height / 2)
     let offset = touchLocation - player.position
-    let labelOffset = CGPoint(x: touchLocation.x, y: touchLocation.y + player.size.height) - CGPoint(x: size.width * CGFloat(player.position.x), y: size.height * CGFloat(player.position.y) + player.size.height)
+    let labelOffset = CGPoint(x: touchLocation.x, y: touchLocation.y + player.size.height / 2) - labelLoc
     let shootAmount = offset
     let realDest = shootAmount + player.position
-    let labelDest = labelOffset + CGPoint(x: size.width * CGFloat(player.position.x), y: size.height * CGFloat(player.position.y) + player.size.height)
+    let labelDest = labelOffset + labelLoc
     let movementTime = Float(realDest.length()) / Constants.speed
     
     let actionMove = SKAction.move(to: realDest, duration: TimeInterval(movementTime))

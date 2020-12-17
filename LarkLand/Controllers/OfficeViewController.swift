@@ -90,12 +90,11 @@ class OfficeViewController: UIViewController, VideoCallDelegate {
     
     func disableCall(participant:String) {
         
+        myView.isHidden = true
+        friendView?.isHidden = true
         if let room = self.room {
             room.disconnect()
         }
-        
-        myView.isHidden = true
-//        friendView.isHidden = true
     }
     
     
@@ -137,7 +136,8 @@ extension OfficeViewController {
             // Preview our local camera track in the local video preview view.
             camera = CameraSource(options: options, delegate: self)
             localVideoTrack = LocalVideoTrack(source: camera!, enabled: true, name: "Camera")
-
+            
+            self.myView!.contentMode = .scaleAspectFill;
             localVideoTrack!.addRenderer(self.myView!)
             logMessage(messageText: "Video track created")
 
@@ -208,6 +208,8 @@ extension OfficeViewController {
         self.friendView = VideoView(frame: CGRect.zero, delegate: self)
 
         self.view.insertSubview(self.friendView!, at: 0)
+        friendView?.layer.borderWidth = 3
+        friendView?.layer.borderColor = UIColor.gray.cgColor
         self.friendView!.contentMode = .scaleAspectFill;
         
         friendView.translatesAutoresizingMaskIntoConstraints = false
