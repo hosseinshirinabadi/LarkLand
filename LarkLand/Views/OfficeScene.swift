@@ -72,10 +72,6 @@ class OfficeScene: SKScene {
                 let positionY = dbUser["positionY"] as! Float
                 let spriteCol = dbUser["spriteCol"] as! Int
                 let spriteRow = dbUser["spriteRow"] as! Int
-//                if (diff.type == .added && currUser.userData.name != name) {
-//                    userDict[name] = User(userID: name, name: name, positionX: positionX, positionY: positionY, spriteRow: spriteRow, spriteCol: spriteCol)
-//                    self.addFriend(name: name)
-//                }
                 if(diff.type == .modified && currUser.userData.name != name) {
                     self.moveFriend(user: userDict[name]!, positionX: positionX, positionY: positionY)
                 }
@@ -105,12 +101,6 @@ class OfficeScene: SKScene {
         addUsers()
         setUpListener()
         
-<<<<<<< HEAD
-=======
-        //checks whether the users are in proximity of eachother
-        Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(areTheyCloseFunction), userInfo: nil, repeats: true)
-        
->>>>>>> d1dbba42c5de9436a655eb7dc1be40f478db3d32
         if (currUser.userData.positionX == nil || currUser.userData.positionY == nil) {
             print("couldn't find user position")
             positionX = Constants.positionX
@@ -158,7 +148,6 @@ class OfficeScene: SKScene {
     }
     
     func addFriend(name: String) {
-    // Create sprite
         let user = userDict[name]
         let friend = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: user!.userData.spriteCol!, row: user!.userData.spriteRow!))
         
@@ -172,7 +161,7 @@ class OfficeScene: SKScene {
         
         addChild(friend)
         friendNodeDict[name] = friend
-    }
+  }
   
     
     func moveFriend(user: User, positionX: Float, positionY: Float) {
