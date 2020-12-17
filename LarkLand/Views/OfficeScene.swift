@@ -7,6 +7,7 @@
 
 import Foundation
 import SpriteKit
+import TwilioVideo
 
 var userDict = [String:User]()
 var friendNodeDict = [String:SKSpriteNode]()
@@ -57,7 +58,7 @@ class OfficeScene: SKScene {
     }
     
     let player = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: currUser.userData.spriteCol!, row: currUser.userData.spriteRow!))
-    var timer: Timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(detectProximity), userInfo: nil, repeats: true)
+//    var timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(detectProximity), userInfo: nil, repeats: true)
     
     func setUpListener() {
         db.collection("users").addSnapshotListener { querySnapshot, error in
@@ -72,15 +73,11 @@ class OfficeScene: SKScene {
                 let positionY = dbUser["positionY"] as! Float
                 let spriteCol = dbUser["spriteCol"] as! Int
                 let spriteRow = dbUser["spriteRow"] as! Int
-<<<<<<< HEAD
-                if (diff.type == .modified && currUser.userData.name != name) {
-=======
 //                if (diff.type == .added && currUser.userData.name != name) {
 //                    userDict[name] = User(userID: name, name: name, positionX: positionX, positionY: positionY, spriteRow: spriteRow, spriteCol: spriteCol)
 //                    self.addFriend(name: name)
 //                }
                 if(diff.type == .modified && currUser.userData.name != name) {
->>>>>>> d1dbba42c5de9436a655eb7dc1be40f478db3d32
                     self.moveFriend(user: userDict[name]!, positionX: positionX, positionY: positionY)
                 }
             }
@@ -95,26 +92,12 @@ class OfficeScene: SKScene {
         }
     }
     
-    @objc func areTheyCloseFunction() {
-        var closePeople: [SKSpriteNode] = []
-        for (name, sprite) in friendNodeDict {
-            
-        }
-    }
-    
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.white
         let positionX: Float!
         let positionY: Float!
         addUsers()
         setUpListener()
-        
-        //checks whether the users are in proximity of eachother
-<<<<<<< HEAD
-//        Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(areTheyCloseFunction), userInfo: nil, repeats: true)
-=======
-        Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(areTheyCloseFunction), userInfo: nil, repeats: true)
->>>>>>> d1dbba42c5de9436a655eb7dc1be40f478db3d32
         
         if (currUser.userData.positionX == nil || currUser.userData.positionY == nil) {
             print("couldn't find user position")
@@ -135,21 +118,12 @@ class OfficeScene: SKScene {
         addChild(player)
         physicsWorld.gravity = .zero
         physicsWorld.contactDelegate = self
-<<<<<<< HEAD
-        
         run(SKAction.repeatForever(
-          SKAction.sequence([
-            SKAction.run(detectProximity),
-            SKAction.wait(forDuration: 0.1)
-            ])
+              SKAction.sequence([
+                SKAction.run(detectProximity),
+                SKAction.wait(forDuration: 0.1)
+                ])
         ))
-=======
-//        run(SKAction.repeatForever(
-//              SKAction.sequence([
-//                SKAction.run(detectProximity),
-//                SKAction.wait(forDuration: 0.1)
-//                ])
-//        ))
     }
     
     @objc func detectProximity() {
@@ -157,24 +131,13 @@ class OfficeScene: SKScene {
         for (name, sprite) in friendNodeDict {
             if (player.position - sprite.position).length() < 50 {
                 print(name + " is close to you")
-                timer.invalidate()
-            } else {
-                timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(areTheyCloseFunction), userInfo: nil, repeats: true)
-            }
-        }
->>>>>>> d1dbba42c5de9436a655eb7dc1be40f478db3d32
-    }
-    
-    func detectProximity() {
-        var closePeople: [SKSpriteNode] = []
-        for (name, sprite) in friendNodeDict {
-            if (player.position - sprite.position).length() < 50 {
-                print(name + " is close to you")
+//                timer.invalidate()
             }
         }
     }
     
     func addFriend(name: String) {
+    // Create sprite
         let user = userDict[name]
         let friend = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: user!.userData.spriteCol!, row: user!.userData.spriteRow!))
         
@@ -188,11 +151,7 @@ class OfficeScene: SKScene {
         
         addChild(friend)
         friendNodeDict[name] = friend
-<<<<<<< HEAD
-  }
-=======
     }
->>>>>>> d1dbba42c5de9436a655eb7dc1be40f478db3d32
   
     
     func moveFriend(user: User, positionX: Float, positionY: Float) {
@@ -205,6 +164,10 @@ class OfficeScene: SKScene {
         let actionMove = SKAction.move(to: realDest, duration: TimeInterval(movementTime))
         let friend = friendNodeDict[user.userData.name!]
         friend!.run(actionMove)
+    }
+    
+    func setUpVideoCall () {
+        
     }
     
     

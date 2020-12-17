@@ -21,6 +21,7 @@
 		949A2543258AFAE900C48AD4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949A2542258AFAE900C48AD4 /* LoginView.swift */; };
 		949A2570258AFC5500C48AD4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949A256F258AFC5500C48AD4 /* LoginViewController.swift */; };
 		949A2573258B044000C48AD4 /* OfficeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949A2572258B044000C48AD4 /* OfficeViewController.swift */; };
+		949C794F258BDBF0007F30F6 /* VideoCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949C794E258BDBF0007F30F6 /* VideoCallViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		949A2542258AFAE900C48AD4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		949A256F258AFC5500C48AD4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		949A2572258B044000C48AD4 /* OfficeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeViewController.swift; sourceTree = "<group>"; };
+		949C794E258BDBF0007F30F6 /* VideoCallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallViewController.swift; sourceTree = "<group>"; };
 		CEA03A503CAEFC070D08F4A4 /* Pods_LarkLand.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LarkLand.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -104,6 +106,7 @@
 				949A2482258AB80A00C48AD4 /* SceneDelegate.swift */,
 				949A256F258AFC5500C48AD4 /* LoginViewController.swift */,
 				949A2572258B044000C48AD4 /* OfficeViewController.swift */,
+				949C794E258BDBF0007F30F6 /* VideoCallViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -277,6 +280,7 @@
 				949A24EF258AEC0C00C48AD4 /* User.swift in Sources */,
 				940EDEAB258B36050072C947 /* Office.swift in Sources */,
 				949A2483258AB80A00C48AD4 /* SceneDelegate.swift in Sources */,
+				949C794F258BDBF0007F30F6 /* VideoCallViewController.swift in Sources */,
 				940EDEA4258B16E20072C947 /* OfficeScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
