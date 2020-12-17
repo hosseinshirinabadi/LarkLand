@@ -58,7 +58,11 @@ class OfficeScene: SKScene {
     }
     
     let player = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: currUser.userData.spriteCol!, row: currUser.userData.spriteRow!))
+<<<<<<< HEAD
 //    var timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(detectProximity), userInfo: nil, repeats: true)
+=======
+    var isClose = false
+>>>>>>> a8f8ae2541faf2e438e33a9c58b4b022a39adf8a
     
     func setUpListener() {
         db.collection("users").addSnapshotListener { querySnapshot, error in
@@ -73,10 +77,13 @@ class OfficeScene: SKScene {
                 let positionY = dbUser["positionY"] as! Float
                 let spriteCol = dbUser["spriteCol"] as! Int
                 let spriteRow = dbUser["spriteRow"] as! Int
+<<<<<<< HEAD
 //                if (diff.type == .added && currUser.userData.name != name) {
 //                    userDict[name] = User(userID: name, name: name, positionX: positionX, positionY: positionY, spriteRow: spriteRow, spriteCol: spriteCol)
 //                    self.addFriend(name: name)
 //                }
+=======
+>>>>>>> a8f8ae2541faf2e438e33a9c58b4b022a39adf8a
                 if(diff.type == .modified && currUser.userData.name != name) {
                     self.moveFriend(user: userDict[name]!, positionX: positionX, positionY: positionY)
                 }
@@ -126,14 +133,29 @@ class OfficeScene: SKScene {
         ))
     }
     
-    @objc func detectProximity() {
-//        var closePeople: [SKSpriteNode] = []
+    
+    func detectProximity() {
         for (name, sprite) in friendNodeDict {
-            if (player.position - sprite.position).length() < 50 {
+            if (player.position - sprite.position).length() < 50 && !isClose {
                 print(name + " is close to you")
+<<<<<<< HEAD
 //                timer.invalidate()
             }
         }
+=======
+                isClose = true
+                startVideo()
+            } else if (isClose && (player.position - sprite.position).length() < 50) {
+                print("in call")
+            } else {
+                isClose = false
+            }
+        }
+    }
+    
+    func startVideo() {
+        print("video starts")
+>>>>>>> a8f8ae2541faf2e438e33a9c58b4b022a39adf8a
     }
     
     func addFriend(name: String) {
@@ -151,7 +173,11 @@ class OfficeScene: SKScene {
         
         addChild(friend)
         friendNodeDict[name] = friend
+<<<<<<< HEAD
     }
+=======
+  }
+>>>>>>> a8f8ae2541faf2e438e33a9c58b4b022a39adf8a
   
     
     func moveFriend(user: User, positionX: Float, positionY: Float) {
