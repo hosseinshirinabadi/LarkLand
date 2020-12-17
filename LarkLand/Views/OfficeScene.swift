@@ -49,28 +49,22 @@ class OfficeScene: SKScene {
         static let projectile: UInt32 = 0b10      // 2
     }
   
-  // 1
-//    let player = SKSpriteNode(imageNamed: "player")
-//    let sheet = SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 8, columns: 12, spacing: 1, margin: 1)
-    let player = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: 8, row: 1))
+    let player = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: Constants.spriteColHossein, row: Constants.spriteRowHossein))
+    
     var monstersDestroyed = 0
   
-  override func didMove(to view: SKView) {
-    // 2
-    backgroundColor = SKColor.white
-    // 3
-    player.position = CGPoint(x: size.width * 0.1, y: size.height * 0.5)
-    // 4
-    addChild(player)
-    
-    
-    
-    physicsWorld.gravity = .zero
-    physicsWorld.contactDelegate = self
-    
-    addFriend()
-//    run(SKAction.run(addMonster))
-    
+    override func didMove(to view: SKView) {
+        backgroundColor = SKColor.white
+        let positionX = Constants.positionX
+        let positionY = Constants.positionY
+        currUser.setPosition(positionX: positionX, positionY: positionY)
+        currUser.setSprite(spriteRow: Constants.spriteRowHossein, spriteCol: Constants.spriteColHossein)
+        currUser.addToDB {}
+        player.position = CGPoint(x: size.width * CGFloat(positionX), y: size.height * CGFloat(positionY))
+        addChild(player)
+        physicsWorld.gravity = .zero
+        physicsWorld.contactDelegate = self
+        addFriend()
 //    run(SKAction.repeatForever(
 //      SKAction.sequence([
 //        SKAction.run(addMonster),
@@ -80,29 +74,21 @@ class OfficeScene: SKScene {
     
   }
   
-  func random() -> CGFloat {
-    return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
-  }
-  
-  func random(min: CGFloat, max: CGFloat) -> CGFloat {
-    return random() * (max - min) + min
-  }
   
   func addFriend() {
     // Create sprite
-    let monster = SKSpriteNode(imageNamed: "monster")
+    let friend = SKSpriteNode(imageNamed: "monster")
     
-    monster.physicsBody = SKPhysicsBody(rectangleOf: monster.size) // 1
-    monster.physicsBody?.isDynamic = true // 2
-    monster.physicsBody?.categoryBitMask = PhysicsCategory.monster // 3
-    monster.physicsBody?.contactTestBitMask = PhysicsCategory.projectile // 4
-    monster.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
+    friend.physicsBody = SKPhysicsBody(rectangleOf: friend.size) // 1
+    friend.physicsBody?.isDynamic = true // 2
+    friend.physicsBody?.categoryBitMask = PhysicsCategory.monster // 3
+    friend.physicsBody?.contactTestBitMask = PhysicsCategory.projectile // 4
+    friend.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
     
     
-    monster.position = CGPoint(x: size.width/2, y: size.height/2)
+    friend.position = CGPoint(x: size.width/2, y: size.height/2)
     
-    // Add the monster to the scene
-    addChild(monster)
+    addChild(friend)
     
     // Determine speed of the monster
 //    let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))
@@ -127,20 +113,13 @@ class OfficeScene: SKScene {
     
     let touchLocation = touch.location(in: self)
     
-    // 3 - Determine offset of new location
     let offset = touchLocation - player.position
-    
-    // 6 - Get the direction of where to shoot
-    
-    // 7 - Make it shoot far enough to be guaranteed off screen
     let shootAmount = offset
-    
-    // 8 - Add the shoot amount to the current position
     let realDest = shootAmount + player.position
-    
-    // 9 - Create the actions
     let actionMove = SKAction.move(to: realDest, duration: 2.0)
     player.run(actionMove)
+    currUser.setPosition(positionX: Float(player.position.x), positionY: Float(player.position.y))
+    currUser.addToDB{}
   }
   
   func projectileDidCollideWithMonster(projectile: SKSpriteNode, monster: SKSpriteNode) {
@@ -157,9 +136,8 @@ class OfficeScene: SKScene {
   }
 }
 
-extension GameScene: SKPhysicsContactDelegate {
+extension OfficeScene: SKPhysicsContactDelegate {
   func didBegin(_ contact: SKPhysicsContact) {
-    // 1
     var firstBody: SKPhysicsBody
     var secondBody: SKPhysicsBody
     if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
@@ -170,7 +148,6 @@ extension GameScene: SKPhysicsContactDelegate {
       secondBody = contact.bodyA
     }
     
-    // 2
     if ((firstBody.categoryBitMask & PhysicsCategory.monster != 0) &&
       (secondBody.categoryBitMask & PhysicsCategory.projectile != 0)) {
       if let monster = firstBody.node as? SKSpriteNode,

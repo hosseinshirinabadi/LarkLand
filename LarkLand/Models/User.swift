@@ -28,10 +28,12 @@ class User {
     }
     
     func addToDB(completion: @escaping () -> Void) {
-        
         let userdata = [
             "name": userData.name,
-            "position": userData.position,
+            "positionX": userData.positionX,
+            "positionY": userData.positionY,
+            "spriteRow": userData.spriteRow,
+            "spriteCol": userData.spriteCol,
         ] as [String : Any]
         db.collection("users").document(userID).setData(userdata)
         {err in
@@ -43,14 +45,18 @@ class User {
         
     }
     
-    func readDataFromDB(completion: @escaping () -> Void) {
+    func readFromDB(completion: @escaping () -> Void) {
         
         let userRef = db.collection("users").document(userID)
         userRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 let dataDescription = document.data()
                 self.userData.name = dataDescription?["name"] as? String
-                self.userData.position = dataDescription?["position"] as? CGPoint
+                self.userData.positionX = dataDescription?["positionX"] as? Float
+                self.userData.positionY = dataDescription?["positionY"] as? Float
+                self.userData.spriteRow = dataDescription?["spriteRow"] as? Int
+                self.userData.spriteCol = dataDescription?["spriteCol"] as? Int
+
                 completion()
             } else {
                 print("Document does not exist. inside user class")
@@ -58,34 +64,19 @@ class User {
         }
     }
     
-    func readFromDB(completion: @escaping () -> Void) {
-        self.readDataFromDB {
-            self.downloadProfilePhoto(userID: self.userID) { image in
-                self.avatar = image
-                completion()
-            }
-        }
+    func setPosition(positionX: Float, positionY: Float) {
+        self.userData.positionX = positionX
+        self.userData.positionY = positionY
     }
     
-    func downloadProfilePhoto(userID: String, completion: @escaping (UIImage) -> Void) {
-        completion(UIImage(named: "default.jpg")!)
-        var image: UIImage!
-        let storageRef = storage.reference(withPath: "profile_pictures/\(userID).png")
-        storageRef.getData(maxSize: 100*400*400) {  (data,error) in
-            if let data = data {
-                image = UIImage(data: data)
-                completion(image)
-            } else {
-                //download the default photo
-                storage.reference(withPath: "profile_pictures/default.jpg").getData(maxSize: 100*400*400) {  (data,error) in
-                    if let data = data {
-                        image = UIImage(data: data)
-                        completion(image)
-                    }
-                }
-            }
-        }
+    func setSprite(spriteRow: Int, spriteCol: Int) {
+        self.userData.spriteRow = spriteRow
+        self.userData.spriteCol = spriteCol
     }
+    
+    
+    
+    
 }
 
 
@@ -93,13 +84,18 @@ class User {
 struct UserData {
     
     var name: String?
-    var position: CGPoint?
-    var spriteCoordinate: [Int]?
+    var positionX: Float?
+    var positionY: Float?
+    var spriteCol: Int?
+    var spriteRow: Int?
     
-    init(name: String? = nil, position: CGPoint? = nil, spriteCoordinate: [Int]? = nil) {
+    
+    init(name: String? = nil, positionX: Float? = nil, positionY: Float? = nil, spriteRow: Int? = nil, spriteCol: Int? = nil) {
         self.name = name
-        self.position = position
-        self.spriteCoordinate = spriteCoordinate
+        self.positionX = positionX
+        self.positionY = positionY
+        self.spriteRow = spriteRow
+        self.spriteCol = spriteCol
     }
     
 }
@@ -113,4 +109,8 @@ struct Office {
 
 struct Constants {
     static let officeName = "TikTok iOS"
+    static let positionX: Float = 0.1
+    static let positionY: Float = 0.5
+    static let spriteRowHossein: Int = 1
+    static let spriteColHossein: Int = 8
 }

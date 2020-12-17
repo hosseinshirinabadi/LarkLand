@@ -18,6 +18,7 @@ class OfficeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let scene = OfficeScene(size: view.bounds.size)
+        
 //        officeNameLabel = UILabel()
 //        officeNameLabel.text = Constants.officeName
 //        self.view.addSubview(officeNameLabel)
