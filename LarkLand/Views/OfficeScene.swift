@@ -91,6 +91,13 @@ class OfficeScene: SKScene {
         }
     }
     
+    @objc func areTheyCloseFunction() {
+        var closePeople: [SKSpriteNode] = []
+        for (name, sprite) in friendNodeDict {
+            
+        }
+    }
+    
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.white
         let positionX: Float!
@@ -98,6 +105,12 @@ class OfficeScene: SKScene {
         addUsers()
         setUpListener()
         
+<<<<<<< HEAD
+=======
+        //checks whether the users are in proximity of eachother
+        Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(areTheyCloseFunction), userInfo: nil, repeats: true)
+        
+>>>>>>> d1dbba42c5de9436a655eb7dc1be40f478db3d32
         if (currUser.userData.positionX == nil || currUser.userData.positionY == nil) {
             print("couldn't find user position")
             positionX = Constants.positionX
@@ -124,6 +137,7 @@ class OfficeScene: SKScene {
                 ])
         ))
     }
+    
     
     func detectProximity() {
         for (name, sprite) in friendNodeDict {
