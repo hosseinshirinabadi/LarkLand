@@ -42,16 +42,18 @@ extension CGPoint {
 
 class GameScene: SKScene {
   
-  struct PhysicsCategory {
-    static let none      : UInt32 = 0
-    static let all       : UInt32 = UInt32.max
-    static let monster   : UInt32 = 0b1       // 1
-    static let projectile: UInt32 = 0b10      // 2
-  }
+    struct PhysicsCategory {
+        static let none      : UInt32 = 0
+        static let all       : UInt32 = UInt32.max
+        static let monster   : UInt32 = 0b1       // 1
+        static let projectile: UInt32 = 0b10      // 2
+    }
   
   // 1
-  let player = SKSpriteNode(imageNamed: "player")
-  var monstersDestroyed = 0
+//    let player = SKSpriteNode(imageNamed: "player")
+//    let sheet = SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 8, columns: 12, spacing: 1, margin: 1)
+    let player = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: 8, row: 1))
+    var monstersDestroyed = 0
   
   override func didMove(to view: SKView) {
     // 2
@@ -60,6 +62,8 @@ class GameScene: SKScene {
     player.position = CGPoint(x: size.width * 0.1, y: size.height * 0.5)
     // 4
     addChild(player)
+    
+    
     
     physicsWorld.gravity = .zero
     physicsWorld.contactDelegate = self
@@ -128,38 +132,37 @@ class GameScene: SKScene {
     let touchLocation = touch.location(in: self)
     
     // 2 - Set up initial location of projectile
-    let projectile = SKSpriteNode(imageNamed: "projectile")
-    projectile.position = player.position
+//    let projectile = SKSpriteNode(imageNamed: "projectile")
+//    projectile.position = player.position
     
-    projectile.physicsBody = SKPhysicsBody(circleOfRadius: projectile.size.width/2)
-    projectile.physicsBody?.isDynamic = true
-    projectile.physicsBody?.categoryBitMask = PhysicsCategory.projectile
-    projectile.physicsBody?.contactTestBitMask = PhysicsCategory.monster
-    projectile.physicsBody?.collisionBitMask = PhysicsCategory.none
-    projectile.physicsBody?.usesPreciseCollisionDetection = true
+    
+    player.physicsBody?.isDynamic = true
+    player.physicsBody?.categoryBitMask = PhysicsCategory.projectile
+//    player.physicsBody?.contactTestBitMask = PhysicsCategory.monster
+//    player.physicsBody?.collisionBitMask = PhysicsCategory.none
+//    player.physicsBody?.usesPreciseCollisionDetection = true
     
     // 3 - Determine offset of location to projectile
-    let offset = touchLocation - projectile.position
+    let offset = touchLocation - player.position
     
     // 4 - Bail out if you are shooting down or backwards
-    if offset.x < 0 { return }
+//    if offset.x < 0 { return }
     
     // 5 - OK to add now - you've double checked position
-    addChild(projectile)
+//    addChild(projectile)
     
     // 6 - Get the direction of where to shoot
-    let direction = offset.normalized()
     
     // 7 - Make it shoot far enough to be guaranteed off screen
-    let shootAmount = direction * 1000
+    let shootAmount = offset
     
     // 8 - Add the shoot amount to the current position
-    let realDest = shootAmount + projectile.position
+    let realDest = shootAmount + player.position
     
     // 9 - Create the actions
     let actionMove = SKAction.move(to: realDest, duration: 2.0)
-    let actionMoveDone = SKAction.removeFromParent()
-    projectile.run(SKAction.sequence([actionMove, actionMoveDone]))
+//    let actionMoveDone = SKAction.removeFromParent()
+    player.run(SKAction.sequence([actionMove]))
   }
   
   func projectileDidCollideWithMonster(projectile: SKSpriteNode, monster: SKSpriteNode) {
@@ -169,7 +172,7 @@ class GameScene: SKScene {
     
     monstersDestroyed += 1
     if monstersDestroyed > 30 {
-      let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+    let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
 //      let gameOverScene = GameOverScene(size: self.size, won: true)
 //      view?.presentScene(gameOverScene, transition: reveal)
     }
@@ -198,4 +201,46 @@ extension GameScene: SKPhysicsContactDelegate {
       }
     }
   }
+}
+
+class SpriteSheet {
+    let texture: SKTexture
+    let rows: Int
+    let columns: Int
+    var margin: CGFloat=0
+    var spacing: CGFloat=0
+    var frameSize: CGSize {
+        return CGSize(width: (self.texture.size().width-(self.margin*2+self.spacing*CGFloat(self.columns-1)))/CGFloat(self.columns),
+            height: (self.texture.size().height-(self.margin*2+self.spacing*CGFloat(self.rows-1)))/CGFloat(self.rows))
+    }
+
+    init(texture: SKTexture, rows: Int, columns: Int, spacing: CGFloat, margin: CGFloat) {
+        self.texture=texture
+        self.rows=rows
+        self.columns=columns
+        self.spacing=spacing
+        self.margin=margin
+
+    }
+
+    convenience init(texture: SKTexture, rows: Int, columns: Int) {
+        self.init(texture: texture, rows: rows, columns: columns, spacing: 0, margin: 0)
+    }
+
+    func textureForColumn(column: Int, row: Int)->SKTexture? {
+        if !(0...self.rows ~= row && 0...self.columns ~= column) {
+            //location is out of bounds
+            return nil
+        }
+
+        var textureRect=CGRect(x: self.margin+CGFloat(column)*(self.frameSize.width+self.spacing)-self.spacing,
+                               y: self.margin+CGFloat(row)*(self.frameSize.height+self.spacing)-self.spacing,
+                               width: self.frameSize.width,
+                               height: self.frameSize.height)
+
+        textureRect=CGRect(x: textureRect.origin.x/self.texture.size().width, y: textureRect.origin.y/self.texture.size().height,
+            width: textureRect.size.width/self.texture.size().width, height: textureRect.size.height/self.texture.size().height)
+        return SKTexture(rect: textureRect, in: self.texture)
+    }
+
 }
