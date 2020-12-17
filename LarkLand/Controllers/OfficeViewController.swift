@@ -35,6 +35,7 @@ class OfficeViewController: UIViewController, VideoCallDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        roomName = Constants.officeName
         setupVideoView()
         let scene = OfficeScene(size: view.bounds.size)
         scene.videoDelegate = self
