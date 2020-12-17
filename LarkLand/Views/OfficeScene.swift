@@ -1,5 +1,5 @@
 //
-//  LandingView.swift
+//  OfficeScene.swift
 //  LarkLand
 //
 //  Created by Hossein on 12/16/20.
@@ -40,7 +40,7 @@ extension CGPoint {
   }
 }
 
-class GameScene: SKScene {
+class OfficeScene: SKScene {
   
     struct PhysicsCategory {
         static let none      : UInt32 = 0

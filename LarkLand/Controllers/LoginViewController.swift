@@ -73,7 +73,8 @@ class LogInViewController: UIViewController {
         if let name = usernameTextField.text {
             let userID = UUID().uuidString
             currUser = User(userID: name, name: name)
-            self.navigationController?.pushViewController(LandingViewController(), animated: true)
+            
+            self.navigationController?.pushViewController(OfficeViewController(), animated: true)
         }
     }
     
