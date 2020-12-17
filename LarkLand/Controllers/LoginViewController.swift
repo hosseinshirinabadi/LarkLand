@@ -69,10 +69,6 @@ class LogInViewController: UIViewController {
     }
     
     func loadUserDict(completion: @escaping () -> Void) {
-<<<<<<< HEAD
-
-=======
->>>>>>> 0e8c6740c06576c766d89eac382d5863b0b137aa
         let _ = db.collection("users").getDocuments() { (snap, error) in
             if let err = error {
                     print("Error getting documents: \(err)")

@@ -85,7 +85,6 @@ class OfficeScene: SKScene {
                 }
             }
         }
-        
     }
     
     
@@ -107,7 +106,7 @@ class OfficeScene: SKScene {
         backgroundColor = SKColor.white
         var backgroundImage = SKSpriteNode(imageNamed: "larkland")
         backgroundImage.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
-        addChild(backgroundImage)
+//        addChild(backgroundImage)
         let positionX: Float!
         let positionY: Float!
         addUsers()
