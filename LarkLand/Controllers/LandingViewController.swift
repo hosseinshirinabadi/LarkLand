@@ -10,7 +10,11 @@ import SpriteKit
 
 
 class LandingViewController: UIViewController {
-
+    
+    override func loadView() {
+        self.view = SKView()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let scene = GameScene(size: view.bounds.size)
@@ -21,18 +25,10 @@ class LandingViewController: UIViewController {
         scene.scaleMode = .resizeFill
         skView.presentScene(scene)
 
-        // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override var prefersStatusBarHidden: Bool {
+      return true
     }
-    */
 
 }

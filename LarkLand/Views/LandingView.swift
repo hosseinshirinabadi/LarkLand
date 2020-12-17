@@ -64,16 +64,16 @@ class GameScene: SKScene {
     physicsWorld.gravity = .zero
     physicsWorld.contactDelegate = self
     
-    run(SKAction.repeatForever(
-      SKAction.sequence([
-        SKAction.run(addMonster),
-        SKAction.wait(forDuration: 1.0)
-        ])
-    ))
     
-    let backgroundMusic = SKAudioNode(fileNamed: "background-music-aac.caf")
-    backgroundMusic.autoplayLooped = true
-    addChild(backgroundMusic)
+    SKAction.run(addMonster)
+    
+//    run(SKAction.repeatForever(
+//      SKAction.sequence([
+//        SKAction.run(addMonster),
+//        SKAction.wait(forDuration: 1.0)
+//        ])
+//    ))
+    
   }
   
   func random() -> CGFloat {
@@ -99,24 +99,24 @@ class GameScene: SKScene {
     
     // Position the monster slightly off-screen along the right edge,
     // and along a random position along the Y axis as calculated above
-    monster.position = CGPoint(x: size.width + monster.size.width/2, y: actualY)
+    monster.position = CGPoint(x: size.width/2, y: size.height/2)
     
     // Add the monster to the scene
     addChild(monster)
     
     // Determine speed of the monster
-    let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))
+//    let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))
     
     // Create the actions
-    let actionMove = SKAction.move(to: CGPoint(x: -monster.size.width/2, y: actualY), duration: TimeInterval(actualDuration))
-    let actionMoveDone = SKAction.removeFromParent()
-    let loseAction = SKAction.run() { [weak self] in
-      guard let `self` = self else { return }
-      let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-//      let gameOverScene = GameOverScene(size: self.size, won: false)
-//      self.view?.presentScene(gameOverScene, transition: reveal)
-    }
-    monster.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
+//    let actionMove = SKAction.move(to: CGPoint(x: -monster.size.width/2, y: actualY), duration: TimeInterval(actualDuration))
+//    let actionMoveDone = SKAction.removeFromParent()
+//    let loseAction = SKAction.run() { [weak self] in
+//      guard let `self` = self else { return }
+//      let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+////      let gameOverScene = GameOverScene(size: self.size, won: false)
+////      self.view?.presentScene(gameOverScene, transition: reveal)
+//    }
+//    monster.run(SKAction.sequence([actionMove, loseAction, actionMoveDone]))
   }
   
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -124,7 +124,6 @@ class GameScene: SKScene {
     guard let touch = touches.first else {
       return
     }
-    run(SKAction.playSoundFileNamed("pew-pew-lei.caf", waitForCompletion: false))
     
     let touchLocation = touch.location(in: self)
     
