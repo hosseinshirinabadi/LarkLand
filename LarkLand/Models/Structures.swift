@@ -43,6 +43,7 @@ struct Constants {
     static let spriteColStephen: Int = 5
     static let numSteps: Int = 5
     static let speed: Float = 200.0
+    static let proximityRadius: Float = 75
     
     static let accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzRlNjA2NjIxMTBkYmRlNDA4NWEwMThiMGJjODlhZTBkLTE2MDgyNDM0ODAiLCJpc3MiOiJTSzRlNjA2NjIxMTBkYmRlNDA4NWEwMThiMGJjODlhZTBkIiwic3ViIjoiQUNjMGYxN2FmMTkxM2I5N2I1MTg5ZWNiY2RhNmZiM2I2YSIsImV4cCI6MTYwODI0NzA4MCwiZ3JhbnRzIjp7ImlkZW50aXR5IjoiU0tkYmFhN2E5NmE1NWU0ZTVhZjhiZWJlOWQyMzA3Mzc0MiIsInZpZGVvIjp7fX19.filHQIObQ6rU7Jysu7nzr3iOUa6cymaxEuCR78zleZ8"
 }

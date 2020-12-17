@@ -144,11 +144,11 @@ class OfficeScene: SKScene {
     
     func detectProximity() {
         for (name, sprite) in friendNodeDict {
-            if (player.position - sprite.position).length() < 50 && !isClose {
+            if (player.position - sprite.position).length() < CGFloat(Constants.proximityRadius) && !isClose {
                 print(name + " is close to you")
                 isClose = true
                 videoDelegate?.enableCall(participant: name)
-            } else if (isClose && (player.position - sprite.position).length() < 50) {
+            } else if (isClose && (player.position - sprite.position).length() < CGFloat(Constants.proximityRadius)) {
 //                print("in call")
             } else {
                 isClose = false
