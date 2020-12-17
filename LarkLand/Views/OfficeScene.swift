@@ -57,7 +57,7 @@ class OfficeScene: SKScene {
     }
     
     let player = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: currUser.userData.spriteCol!, row: currUser.userData.spriteRow!))
-    
+    var timer: Timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(detectProximity), userInfo: nil, repeats: true)
     
     func setUpListener() {
         db.collection("users").addSnapshotListener { querySnapshot, error in
@@ -72,7 +72,15 @@ class OfficeScene: SKScene {
                 let positionY = dbUser["positionY"] as! Float
                 let spriteCol = dbUser["spriteCol"] as! Int
                 let spriteRow = dbUser["spriteRow"] as! Int
+<<<<<<< HEAD
                 if (diff.type == .modified && currUser.userData.name != name) {
+=======
+//                if (diff.type == .added && currUser.userData.name != name) {
+//                    userDict[name] = User(userID: name, name: name, positionX: positionX, positionY: positionY, spriteRow: spriteRow, spriteCol: spriteCol)
+//                    self.addFriend(name: name)
+//                }
+                if(diff.type == .modified && currUser.userData.name != name) {
+>>>>>>> d1dbba42c5de9436a655eb7dc1be40f478db3d32
                     self.moveFriend(user: userDict[name]!, positionX: positionX, positionY: positionY)
                 }
             }
@@ -102,7 +110,11 @@ class OfficeScene: SKScene {
         setUpListener()
         
         //checks whether the users are in proximity of eachother
+<<<<<<< HEAD
 //        Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(areTheyCloseFunction), userInfo: nil, repeats: true)
+=======
+        Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(areTheyCloseFunction), userInfo: nil, repeats: true)
+>>>>>>> d1dbba42c5de9436a655eb7dc1be40f478db3d32
         
         if (currUser.userData.positionX == nil || currUser.userData.positionY == nil) {
             print("couldn't find user position")
@@ -123,6 +135,7 @@ class OfficeScene: SKScene {
         addChild(player)
         physicsWorld.gravity = .zero
         physicsWorld.contactDelegate = self
+<<<<<<< HEAD
         
         run(SKAction.repeatForever(
           SKAction.sequence([
@@ -130,6 +143,26 @@ class OfficeScene: SKScene {
             SKAction.wait(forDuration: 0.1)
             ])
         ))
+=======
+//        run(SKAction.repeatForever(
+//              SKAction.sequence([
+//                SKAction.run(detectProximity),
+//                SKAction.wait(forDuration: 0.1)
+//                ])
+//        ))
+    }
+    
+    @objc func detectProximity() {
+//        var closePeople: [SKSpriteNode] = []
+        for (name, sprite) in friendNodeDict {
+            if (player.position - sprite.position).length() < 50 {
+                print(name + " is close to you")
+                timer.invalidate()
+            } else {
+                timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(areTheyCloseFunction), userInfo: nil, repeats: true)
+            }
+        }
+>>>>>>> d1dbba42c5de9436a655eb7dc1be40f478db3d32
     }
     
     func detectProximity() {
@@ -144,7 +177,6 @@ class OfficeScene: SKScene {
     func addFriend(name: String) {
         let user = userDict[name]
         let friend = SKSpriteNode(texture: SpriteSheet(texture: SKTexture(imageNamed: "spriteAtlas"), rows: 9, columns: 12, spacing: 0.1, margin: 0.8).textureForColumn(column: user!.userData.spriteCol!, row: user!.userData.spriteRow!))
-//        let friend = SKSpriteNode(imageNamed: "monster")
         
         friend.physicsBody = SKPhysicsBody(rectangleOf: friend.size) // 1
         friend.physicsBody?.isDynamic = true // 2
@@ -156,7 +188,11 @@ class OfficeScene: SKScene {
         
         addChild(friend)
         friendNodeDict[name] = friend
+<<<<<<< HEAD
   }
+=======
+    }
+>>>>>>> d1dbba42c5de9436a655eb7dc1be40f478db3d32
   
     
     func moveFriend(user: User, positionX: Float, positionY: Float) {
