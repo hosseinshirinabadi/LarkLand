@@ -206,9 +206,9 @@ class OfficeScene: SKScene {
         let actionMove = SKAction.move(to: realDest, duration: TimeInterval(movementTime))
         
         let friend = friendNodeDict[user.userData.name!]
-        let labelLoc = CGPoint(x: size.width * CGFloat((user.userData.positionX)!), y: size.height * CGFloat((user.userData.positionY)!) + friend!.size.height / 2)
-        let labelOffset = CGPoint(x: CGFloat(positionX), y: CGFloat(positionY) + CGFloat((friend?.size.height)! / 2)) - labelLoc
-        let labelDest = labelOffset + labelLoc
+        let labelPrevLoc = CGPoint(x: size.width * CGFloat((user.userData.positionX)!), y: size.height * CGFloat((user.userData.positionY)!) + (friend?.size.height)! / 2)
+        let labelOffset = CGPoint(x: newPoint.x, y: newPoint.y + friend!.size.height / 2) - labelPrevLoc
+        let labelDest = labelOffset + labelPrevLoc
         let labelActionMove = SKAction.move(to: labelDest, duration: TimeInterval(movementTime))
         let friendLabel = friendLabelNodeDict[user.userData.name!]
         friendLabel!.run(labelActionMove)
