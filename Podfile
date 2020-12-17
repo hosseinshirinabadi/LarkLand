@@ -22,7 +22,7 @@ target 'LarkLand' do
   pod 'Firebase/Storage'
   pod 'Firebase/Functions'
   pod 'Firebase/Messaging'
-  
+  pod 'Firebase/Functions'
   pod 'MHLoadingButton'
   pod 'UIImageCropper'
 

@@ -8,6 +8,9 @@
 import UIKit
 import SpriteKit
 import TwilioVideo
+import Firebase
+
+
 
 class OfficeViewController: UIViewController, VideoCallDelegate {
     
@@ -62,7 +65,6 @@ class OfficeViewController: UIViewController, VideoCallDelegate {
         myView.widthAnchor.constraint(equalToConstant: videoCallSize).isActive = true
         myView.heightAnchor.constraint(equalToConstant: videoCallSize).isActive = true
         myView.isHidden = true
-        
 
         setupRemoteVideoView()
         friendView.isHidden = true
@@ -71,14 +73,18 @@ class OfficeViewController: UIViewController, VideoCallDelegate {
     func enableCall(participant:String) {
         myView.isHidden = false
         friendView.isHidden = false
+        roomName = Constants.officeName
         #if targetEnvironment(simulator)
             self.myView!.removeFromSuperview()
         #else
             self.startPreview()
         #endif
-        
-//        connect()
-        
+        self.accessToken = Constants.accessToken
+        self.connect()
+//        getToken {
+//            print(self.accessToken)
+//            self.connect()
+//        }
     }
     
     func disableCall(participant:String) {
@@ -90,7 +96,24 @@ class OfficeViewController: UIViewController, VideoCallDelegate {
         myView.isHidden = true
         friendView.isHidden = true
     }
-
+    
+    
+    func getToken(completion: @escaping () -> Void) {
+        functions.httpsCallable("createToken").call(["username": currUser.userData.name,"roomName": roomName!]) { (result, error) in
+            print(result)
+            if let error = error as NSError? {
+                if error.domain == FunctionsErrorDomain {
+                    let code = FunctionsErrorCode(rawValue: error.code)
+                    let message = error.localizedDescription
+                    let details = error.userInfo[FunctionsErrorDetailsKey]
+                }
+            }
+            if let token = result?.data as? String {
+                self.accessToken = token
+                completion()
+            }
+        }
+    }
 }
 
 extension OfficeViewController {

@@ -107,8 +107,8 @@ class OfficeScene: SKScene {
         backgroundColor = SKColor.white
         var backgroundImage = SKSpriteNode(imageNamed: "larkland")
         backgroundImage.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
-        backgroundImage.zPosition = -1
-        addChild(backgroundImage)
+//        backgroundImage.zPosition = -1
+//        addChild(backgroundImage)
         let positionX: Float!
         let positionY: Float!
         addUsers()
@@ -157,7 +157,7 @@ class OfficeScene: SKScene {
                 isClose = true
                 videoDelegate?.enableCall(participant: name)
             } else if (isClose && (player.position - sprite.position).length() < 50) {
-                print("in call")
+//                print("in call")
             } else {
                 isClose = false
                 videoDelegate?.disableCall(participant: name)
